@@ -21,3 +21,44 @@ body {
   background-color: #1a1a1a;
   color: #ffffff;
 }
+
+
+/* Vertical Volume Slider ===============================  */
+.ios-slider {
+  --val: 50;
+}
+
+.ios-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 9999px;
+  
+  position: relative;
+  z-index: 1;
+}
+
+.ios-slider::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 9999px;
+  background: linear-gradient(to right, var(--button-primary) calc(var(--val) * 1%), var(--bg-secondary) 0%);
+}
+
+.ios-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: transparent;
+  border: none;
+  border-radius: 9999px;
+
+  position: relative;
+  z-index: 1;
+}
+
+.ios-slider::-moz-range-track {
+  height: 8px;
+  border-radius: 9999px;
+  background: linear-gradient(to right, var(--button-primary) calc(var(--val) * 1%), var(--bg-secondary) 0%);
+}

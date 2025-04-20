@@ -5,7 +5,7 @@ import { useSettings } from '../contexts/SettingsContext';
 
 export default function NoteEditor() {
   // Get active note and notes state from the notes context
-  const { notes, activeNoteId, updateActiveNote } = useNotes();
+  const { notes, activeNoteId,  updateNote } = useNotes();
   // Get settings from the settings context
   const { settings } = useSettings();
   // Create a ref to the body textarea to focus it when the user presses enter in the title input
@@ -34,12 +34,12 @@ export default function NoteEditor() {
 
   // Return the note editor component
   return (
-    <div className="flex flex-col flex-1 p-8 mt-12">
+    <div className="flex flex-col flex-1 p-6 mt-2">
       {/* // Title input */}
       <input
         type="text"
         value={activeNote.title}
-        onChange={(e) => updateActiveNote(activeNoteId, { title: e.target.value })}
+        onChange={(e) => updateNote(activeNoteId, { title: e.target.value })}
         onKeyDown={handleTitleKeyDown}
         className="w-full bg-transparent border-none outline-none font-mono mb-4 text-[var(--text-primary)]"
         style={{ fontSize: `${settings.headerSize}px` }}
@@ -53,7 +53,7 @@ export default function NoteEditor() {
         <textarea
           ref={bodyRef}
           value={activeNote.body}
-          onChange={(e) => updateActiveNote(activeNoteId, { body: e.target.value })}
+          onChange={(e) => updateNote(activeNoteId, { body: e.target.value })}
           className="flex-1 bg-transparent border-none outline-none font-mono resize-none text-[var(--text-primary)] scrollbar"
           style={{ fontSize: `${settings.bodySize}px` }}
           placeholder="Start writing..."

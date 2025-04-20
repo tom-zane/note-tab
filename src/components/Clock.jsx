@@ -27,7 +27,7 @@ export default function Clock() {
   });
 
   return (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-10">
+    <div className="flex items-center justify-center">
       <div className="relative">
         <span 
           className={`${clockStyles[settings.clockTheme]} transition-all`}
@@ -35,7 +35,7 @@ export default function Clock() {
         >
           {timeString}
         </span>
-        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 h-px bg-[var(--border)] opacity-20"></div>
+      
       </div>
     </div>
   );

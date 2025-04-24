@@ -357,6 +357,8 @@ export const fonts = {
 //*  Default Settings =============================================================================================
 
 export const defaultSettings = {
+  syncEnabled: false,
+  
     headerSize: 20,
     bodySize: 14,
     clockSize: 24,
@@ -365,7 +367,7 @@ export const defaultSettings = {
     theme: 'dark',
     customTheme: null,
     font: 'JetBrains Mono',
-    showSeconds: true,
+    showSeconds: false,
     showLinks: true,
     showClock: true,
     showRadio: true,

@@ -53,18 +53,15 @@ export function RadioProvider({ children }) {
     const loadStationsFromStorage = () => {
       try {
         const storedData = localStorage.getItem("radioStations");
-        console.log("🚀 ~ loadStationsFromStorage ~ storedData:", storedData, storedData?.length > 0);
         const parsedStored = JSON.parse(storedData);
 
         if (Array.isArray(parsedStored) && parsedStored.length > 0) {
           const parsed = parsedStored.map(parseStation);
-          console.log("Loaded stations from localStorage:", parsed);
           setStations(parsed);
         } else {
           throw new Error("No valid stations in localStorage");
         }
       } catch (e) {
-        console.error("Failed to load stations, adding default stations", e);
         const parsedDefaults = defaultStations.map(parseStation);
         setStations(parsedDefaults);
         localStorage.setItem("radioStations", JSON.stringify(defaultStations));

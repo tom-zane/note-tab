@@ -1,16 +1,75 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNotes } from "../contexts/NotesContext";
 import { useSettings } from "../contexts/SettingsContext";
 
+// tiptap editor import
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Highlight from "@tiptap/extension-highlight";
+import TaskList from "@tiptap/extension-task-list";
+import TaskItem from "@tiptap/extension-task-item";
+import Blockquote from '@tiptap/extension-blockquote'
+import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
+
+import { jsPDF } from "jspdf";
+
 import { IoCodeDownloadOutline } from "react-icons/io5";
 
+import EditorMenuBar from "./EditorMenuBar";
+
+import {downloadAsHTML, downloadAsTxt, downloadAsMarkdown, downloadAsPDF  } from "./../utils/downloadSingleFileHelper"
+
 export default function NoteEditor() {
-  // Get active note and notes state from the notes context
+  const [showDownloadMenu, setShowDownloadMenu] = useState(false);
   const { notes, activeNoteId, updateNote } = useNotes();
-  // Get settings from the settings context
   const { settings } = useSettings();
-  // Create a ref to the body textarea to focus it when the user presses enter in the title input
+ 
+
   const bodyRef = useRef(null);
+  // Find the active note from the notes array
+  const activeNote = notes.find((note) => note.id === activeNoteId);
+
+
+  useEffect(() => {
+    if (activeNote) {
+      editor.commands.setContent(activeNote?.body);
+    }
+  }, [activeNoteId]);
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Highlight,
+      Blockquote,
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+      }),
+      Link.configure({
+        openOnClick: false,
+      }),
+      Placeholder.configure({
+        placeholder: "Start writing...",
+      }),
+    ],
+    content: activeNote?.body || "",
+    onUpdate: ({ editor }) => {
+      if (activeNote) {
+        updateNote(activeNoteId, { body: editor.getHTML() });
+      }
+    },
+    editorProps: {
+      attributes: {
+        class: "prose prose-invert max-w-none focus:outline-none",
+        style: `font-size: ${settings.bodySize}px`,
+      },
+    },
+  });
+
+  
+  // ============================================================================
+  // ============================================================================
 
   // Function to handle the keydown event in the title input
   const handleTitleKeyDown = (e) => {
@@ -22,23 +81,18 @@ export default function NoteEditor() {
   };
 
   //* Function to handle file download
-  const handleFileDownload = (title, body) => {
-    const formattedText = `## ${title}\n================================================================================================\n \n${body}`;
-    const blob = new Blob([formattedText], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
+  const handleFileDownload = (fileType, noteTitle = activeNote.title, bodyHtml = editor.getHTML()) => {
+    console.log("fileType", fileType);
+    console.log("noteTitle", noteTitle);
+  
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${title.replace(/\s+/g, "_") || "download"}.txt`;
-    document.body.appendChild(a);
-    a.click();
+    if (fileType === "txt") downloadAsTxt(bodyHtml, noteTitle);
+    if (fileType === "html") downloadAsHTML(bodyHtml, noteTitle);
+    if (fileType === "markdown") downloadAsMarkdown(bodyHtml, noteTitle);
+    if (fileType === "pdf") downloadAsPDF(bodyHtml, noteTitle);
 
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    setShowDownloadMenu(false);
   };
-
-  // Find the active note from the notes array
-  const activeNote = notes.find((note) => note.id === activeNoteId);
 
   // If there is no active note, display a message
   if (!activeNote) {
@@ -47,38 +101,53 @@ export default function NoteEditor() {
 
   // Return the note editor component
   return (
-    <div className="flex flex-col flex-1 p-6 pt-2 mt-2">
-      {/* // Title input */}
-      <div className="flex flex-row  justify-center items-center">
-        {/*  // Title input */}
+    <div className="flex flex-col flex-1 p-1 px-4 ">
+      <div className="flex flex-row relative justify-center items-center">
+        {/*  Title input */}
         <input
           type="text"
           value={activeNote.title}
           onChange={(e) => updateNote(activeNoteId, { title: e.target.value })}
           onKeyDown={handleTitleKeyDown}
-          className="w-full bg-transparent border-none outline-none font-mono mb-4 text-[var(--text-primary)]"
+          className="w-full bg-transparent border-none outline-none font-mono  text-[var(--text-primary)]"
           style={{ fontSize: `${settings.headerSize}px` }}
           placeholder="Note Title"
         />
 
         {/* Download Trigger Button  */}
-        <button onClick={() => handleFileDownload(activeNote.title, activeNote.body)} className=" hover:bg-[var(--bg-primary)] p-2  rounded-md">
+        <button onClick={() => setShowDownloadMenu((prev) => !prev)} className=" hover:bg-[var(--bg-primary)] p-2  rounded-md">
           <IoCodeDownloadOutline className="text-2xl" />
         </button>
+
+        {/* // Download menu     */}
+        {showDownloadMenu && (
+          <div className="absolute top-10 z-20 right-0 w-fit flex flex-col mt-2 bg-[var(--bg-primary)] border border-[var(--border)] rounded-md shadow-lg" style={{ minWidth: "150px" }}>
+            <button className="w-full text-left px-4 py-1 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]" onClick={() => handleFileDownload("pdf")}>
+              PDF
+            </button>
+            <button className="w-full text-left px-4 py-1 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]" onClick={() => handleFileDownload("txt")}>
+              TXT
+            </button>
+            <button className="w-full text-left px-4 py-1 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]" onClick={() => handleFileDownload("md")}>
+              Markdown
+            </button>
+            <button className="w-full text-left px-4 py-1 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]" onClick={() => handleFileDownload("html")}>
+              HTML
+            </button>
+          </div>
+        )}
+
+        {/* ======================= */}
       </div>
       {/* // Horizontal line separating the title and the body */}
-      <div className="w-full h-px bg-[var(--border)] opacity-20 mb-4"></div>
+      <div className="w-full h-px bg-[var(--border)] opacity-20 mb-2"></div>
 
-      {/* // Body textarea */}
-      <div className="flex gap-4 h-[calc(100vh-240px)]">
-        <textarea
-          ref={bodyRef}
-          value={activeNote.body}
-          onChange={(e) => updateNote(activeNoteId, { body: e.target.value })}
-          className="flex-1 bg-transparent border-none outline-none font-mono resize-none text-[var(--text-primary)] scrollbar"
-          style={{ fontSize: `${settings.bodySize}px` }}
-          placeholder="Start writing..."
-        />
+      {/* Editor */}
+      <EditorMenuBar editor={editor} />
+      <div className="flex-1 max-h-[calc(100vh-250px)] scrollbar overflow-y-auto px-4 pb-4">
+        <div className="prose prose-invert max-w-none">
+          <EditorContent   editor={editor} />
+        </div>
       </div>
     </div>
   );

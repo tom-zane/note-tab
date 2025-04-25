@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NotesProvider } from './contexts/NotesContext';
 import { SettingsProvider } from './contexts/SettingsContext';
 import { LinksProvider } from './contexts/LinksContext';
@@ -14,6 +14,9 @@ import RadioPlayer from './components/RadioPlayer';
 
 function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+
+
 
   return (
     <SettingsProvider>

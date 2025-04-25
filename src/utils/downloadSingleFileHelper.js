@@ -8,23 +8,31 @@ const PDF_MARGINS = [15, 15, 15, 15];
 const PDF_SCALE = 0.3;
 const EXPORT_CSS = `
       body {
-        font-family: 'Inconsolata', monospace;
-        font-size: 11pt;
-        color: #333;
+       font-family: 'Courier', monospace;
+        font-size: 13pt;
+        color: wheat;
+        background-color: #1a1a1a;
       }
+        mark {
+  border-radius: 0.1rem !important;
+  padding: 0 0.1rem !important;
+  color: white !important;
 
-      h1 { font-size: 16pt; color: #dc7633; }
-      h2 { font-size: 14pt; color: #27ae60; }
-      h3 { font-size: 13pt; color: #7f8c8d; }
+}
+
+      h1 { font-size: 18pt; color: #dc7633; }
+      h2 { font-size: 16pt; color: #27ae60; }
+      h3 { font-size: 14pt; color: #7f8c8d; }
       h4, h5, h6 { font-size: 12pt; color: #95a5a6; }
 
       p, span, label {
-        font-size: 11pt;
+        font-size: 13pt;
         margin: 8px 0;
       }
 
       input[type="checkbox"] {
-        transform: scale(1.1);
+        transform: scale(1.4);
+        cursor: pointer;
         margin-right: 8px;
         vertical-align: middle;
         background-color: #dc7633;
@@ -49,13 +57,16 @@ width: fit-content;
       }
 
       blockquote {
-        max-width: 150mm;
+        max-width: 100%;
         box-sizing: border-box;
-        padding: 10px 16px;
-        background: #f4f4f4;
-        border-left: 4px solid #ccc;
+        padding: 10px 16px;            
+    background: #090909;
+    border-left: 4px solid #6b91ff;
+    font-style: italic;
+    color: #a8a8a8;
+    
         font-style: italic;
-        color: #555;
+     
         margin: 12px 0;
       }
     `
@@ -65,7 +76,7 @@ width: fit-content;
 // FUNCTIONS =====================================================================
 export const downloadAsHTML = (content, title) => {
 
-    const fullHTML = `
+  const fullHTML = `
       <!DOCTYPE html>
       <html lang="en">
         <head>
@@ -79,124 +90,90 @@ export const downloadAsHTML = (content, title) => {
       </html>
     `;
 
-    const blob = new Blob([fullHTML], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${title || "note"}.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+  const blob = new Blob([fullHTML], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${title || "note"}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 };
 
 
 export const downloadAsMarkdown = (content, title) => {
-    console.log("🚀 ~ downloadAsMarkdown ~ content:", content);
-    const turndownService = new TurndownService(); // ← create instance
-    const markdown = turndownService.turndown(content);
-    console.log("🚀 ~ downloadAsMarkdown ~ markdown:", markdown)
-    
+  console.log("🚀 ~ downloadAsMarkdown ~ content:", content);
+  const turndownService = new TurndownService(); // ← create instance
+  const markdown = turndownService.turndown(content);
+  console.log("🚀 ~ downloadAsMarkdown ~ markdown:", markdown)
 
-    const blob = new Blob([markdown], { type: "text/markdown" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${title || "note"}.md`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+
+  const blob = new Blob([markdown], { type: "text/markdown" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${title || "note"}.md`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 };
 
 export const downloadAsTxt = (content, title) => {
-    // Create a temporary container to work with HTML content
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = content;
+  // Create a temporary container to work with HTML content
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = content;
 
-    // Convert HTML to plain text with some structure preserved
-    const convertNodeToText = (node) => {
-        switch (node.nodeType) {
-            case Node.TEXT_NODE:
-                return node.nodeValue;
+  // Convert HTML to plain text with some structure preserved
+  const convertNodeToText = (node) => {
+    switch (node.nodeType) {
+      case Node.TEXT_NODE:
+        return node.nodeValue;
 
-            case Node.ELEMENT_NODE:
-                const tag = node.tagName.toLowerCase();
+      case Node.ELEMENT_NODE:
+        const tag = node.tagName.toLowerCase();
 
-                if (["br"].includes(tag)) return "\n";
-                if (["p", "div"].includes(tag)) return getTextFromChildren(node) + "\n\n";
-                if (["h1", "h2", "h3", "h4", "h5", "h6"].includes(tag)) {
-                    return `\n${getTextFromChildren(node).toUpperCase()}\n\n`;
-                }
-                if (tag === "blockquote") {
-                    return `> ${getTextFromChildren(node)}\n\n`;
-                }
-                if (tag === "ul" || tag === "ol") {
-                    return getTextFromChildren(node);
-                }
-                if (tag === "li") {
-                    return `- ${getTextFromChildren(node)}\n`;
-                }
-                if (tag === "input" && node.type === "checkbox") {
-                    return node.checked ? "[x] " : "[ ] ";
-                }
-                return getTextFromChildren(node);
-
-            default:
-                return "";
+        if (["br"].includes(tag)) return "\n";
+        if (["p", "div"].includes(tag)) return getTextFromChildren(node) + "\n\n";
+        if (["h1", "h2", "h3", "h4", "h5", "h6"].includes(tag)) {
+          return `\n${getTextFromChildren(node).toUpperCase()}\n\n`;
         }
-    };
+        if (tag === "blockquote") {
+          return `> ${getTextFromChildren(node)}\n\n`;
+        }
+        if (tag === "ul" || tag === "ol") {
+          return getTextFromChildren(node);
+        }
+        if (tag === "li") {
+          return `- ${getTextFromChildren(node)}\n`;
+        }
+        if (tag === "input" && node.type === "checkbox") {
+          return node.checked ? "[x] " : "[ ] ";
+        }
+        return getTextFromChildren(node);
 
-    const getTextFromChildren = (node) =>
-        Array.from(node.childNodes)
-            .map(convertNodeToText)
-            .join("");
+      default:
+        return "";
+    }
+  };
 
-    const plainText = getTextFromChildren(tempDiv).trim();
+  const getTextFromChildren = (node) =>
+    Array.from(node.childNodes)
+      .map(convertNodeToText)
+      .join("");
 
-    // Create and download the .txt file
-    const blob = new Blob([plainText], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${title || "note"}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+  const plainText = getTextFromChildren(tempDiv).trim();
+
+  // Create and download the .txt file
+  const blob = new Blob([plainText], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${title || "note"}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
-export const downloadAsPDF = async (content, title) => {
-    const container = document.createElement('div');
-    container.innerHTML = content;
-    container.style.padding = '40px';
-    container.style.width = '210mm';
-    container.style.boxSizing = 'border-box';
-    container.style.backgroundColor = '#fff';
-
-    const style = document.createElement('style');
-    style.textContent = EXPORT_CSS;
-    const fontLink = document.createElement('link');
-    fontLink.href = 'https://fonts.googleapis.com/css2?family=Inconsolata&display=swap';
-    fontLink.rel = 'stylesheet';
-    container.prepend(fontLink);
-    container.prepend(style);
-    await document.fonts.ready;
-    document.body.appendChild(container);
-
-    const pdf = new jsPDF({
-        unit: 'mm',
-        format: 'a4',
-        orientation: 'portrait'
-    });
-
-    await pdf.html(container, {
-        margin: PDF_MARGINS,
-        html2canvas: { scale: PDF_SCALE },
-        autoPaging: 'text',
-        callback: () => {
-            pdf.save(`${title}.pdf`);
-            document.body.removeChild(container);
-        }
-    });
-}

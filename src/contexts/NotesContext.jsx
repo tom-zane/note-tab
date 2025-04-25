@@ -23,13 +23,18 @@ export function NotesProvider({ children }) {
   }, [notes, activeNoteId]);
 
   const addNote = () => {
+    console.log('addNote triggered =====');
     const newNote = {
       id: Date.now(),
       title: 'Untitled Note',
       body: '',
     };
-    setNotes([newNote, ...notes]);
+    console.log("🚀 ~ addNote ~ newNote:", newNote)
+    
+
+    setNotes(prevNotes => [newNote, ...prevNotes]);
     setActiveNoteId(newNote.id);
+    console.log(notes, activeNoteId);
   };
 
   const updateNote = (id, updates) => {

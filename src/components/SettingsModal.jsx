@@ -8,6 +8,7 @@ import { IoLogoWhatsapp } from "react-icons/io5";
 import { FaTelegram } from "react-icons/fa";
 import { SiBuymeacoffee } from "react-icons/si";
 import { MdEmail, MdDelete } from "react-icons/md";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 // Contexts
 import { useSettings } from "../contexts/SettingsContext";
@@ -256,7 +257,7 @@ export default function SettingsModal({ onClose }) {
             </div>
           </div>
 
-          {/* Radio Settings - Add Stations */}
+          {/* Radio Settings - List Stations / Delete Stations */}
           <div className="grid grid-cols-2 gap-3 items-start">
             <label className="font-mono text-sm text-[var(--text-primary)]">Available Stations</label>
 
@@ -269,8 +270,8 @@ export default function SettingsModal({ onClose }) {
                         <span className="text-xs w-[80%] truncate" value={station.url}>
                           {i + 1}. {station.genre} | {station.name}
                         </span>
-                        <button onClick={() => deleteStation(i)} className="text-xl px-1.5 py-1 flex items-center justify-center w-[15%] rounded-lg  cursor-pointer hover:bg-red-500 bg-red-400">
-                          <MdDelete />
+                        <button onClick={() => deleteStation(i)} className="text-lg  py-1 flex items-center justify-center w-[15%] text-white rounded-sm  cursor-pointer hover:bg-[#cb4335] bg-[#e74c3c]">
+                        < RiDeleteBinLine />
                         </button>
                       </div>
                     );
@@ -280,6 +281,7 @@ export default function SettingsModal({ onClose }) {
               )}
             </div>
           </div>
+          {/* Radio Settings - Add New Station */}
           <div className="grid grid-cols-2 gap-3 items-start">
             <label className="font-mono text-sm text-[var(--text-primary)]">Add New Station</label>
 

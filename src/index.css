@@ -19,13 +19,23 @@ body {
 
 .dark body {
   background-color: #1a1a1a;
-  color: #ffffff;
+  color: #ffffff ;
 }
 
 
 /* Vertical Volume Slider ===============================  */
 .ios-slider {
   --val: 50;
+}
+
+/* Highlight */
+
+mark {
+
+  border-radius: 0.1rem !important;
+  padding: 0 0.1rem !important;
+  color: white !important;
+
 }
 
 .ios-slider::-webkit-slider-thumb {

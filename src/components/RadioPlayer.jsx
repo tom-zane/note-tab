@@ -31,16 +31,16 @@ export default function RadioPlayer() {
               </span>
               {/* Media Controls ====================== */}
               <div className="flex items-center flex-row space-x-4 ">
-                <button onClick={prevStation} className="text-xl hover:text-gray-300">
+                <button onClick={prevStation} className="text-xl rounded-md p-1  hover:bg-[var(--bg-tertiary)]">
                   <AiOutlineStepBackward />
                 </button>
                 <button onClick={togglePlay} className="text-3xl bg-[var(--button-primary)] text-[var(--bg-primary)] rounded-full hover:bg-[var(--button-secondary)] hover:text-[var(--text-primary)]">
                   {isPlaying ? <AiFillPauseCircle /> : <AiFillPlayCircle />}
                 </button>
-                <button onClick={nextStation} className="text-xl hover:text-gray-300">
+                <button onClick={nextStation} className="text-xl rounded-md p-1  hover:bg-[var(--bg-tertiary)]">
                   <AiOutlineStepForward />
                 </button>
-                <button onClick={shuffleStation} className="text-xl hover:text-gray-300">
+                <button onClick={shuffleStation} className="text-xl rounded-md p-1  hover:bg-[var(--bg-tertiary)]">
                   <AiOutlineSwap />
                 </button>
               </div>

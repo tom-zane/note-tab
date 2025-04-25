@@ -8,9 +8,11 @@ import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
-import Blockquote from '@tiptap/extension-blockquote'
+import Blockquote from "@tiptap/extension-blockquote";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
+import OrderedList from "@tiptap/extension-ordered-list";
+import HorizontalRule from "@tiptap/extension-horizontal-rule";
 
 import { jsPDF } from "jspdf";
 
@@ -18,18 +20,16 @@ import { IoCodeDownloadOutline } from "react-icons/io5";
 
 import EditorMenuBar from "./EditorMenuBar";
 
-import {downloadAsHTML, downloadAsTxt, downloadAsMarkdown, downloadAsPDF  } from "./../utils/downloadSingleFileHelper"
+import { downloadAsHTML, downloadAsTxt, downloadAsMarkdown } from "./../utils/downloadSingleFileHelper";
 
 export default function NoteEditor() {
   const [showDownloadMenu, setShowDownloadMenu] = useState(false);
   const { notes, activeNoteId, updateNote } = useNotes();
   const { settings } = useSettings();
- 
 
   const bodyRef = useRef(null);
   // Find the active note from the notes array
   const activeNote = notes.find((note) => note.id === activeNoteId);
-
 
   useEffect(() => {
     if (activeNote) {
@@ -40,9 +40,13 @@ export default function NoteEditor() {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Highlight,
+      Highlight.configure({
+        multicolor: true,
+      }),
       Blockquote,
       TaskList,
+      HorizontalRule,
+      OrderedList,
       TaskItem.configure({
         nested: true,
       }),
@@ -67,7 +71,6 @@ export default function NoteEditor() {
     },
   });
 
-  
   // ============================================================================
   // ============================================================================
 
@@ -76,7 +79,7 @@ export default function NoteEditor() {
     if (e.key === "Enter") {
       e.preventDefault();
       // Focus the body textarea when the user presses enter in the title input
-      bodyRef.current?.focus();
+      editor?.commands.focus()
     }
   };
 
@@ -84,12 +87,11 @@ export default function NoteEditor() {
   const handleFileDownload = (fileType, noteTitle = activeNote.title, bodyHtml = editor.getHTML()) => {
     console.log("fileType", fileType);
     console.log("noteTitle", noteTitle);
-  
 
     if (fileType === "txt") downloadAsTxt(bodyHtml, noteTitle);
     if (fileType === "html") downloadAsHTML(bodyHtml, noteTitle);
     if (fileType === "md") downloadAsMarkdown(bodyHtml, noteTitle);
-    if (fileType === "pdf") downloadAsPDF(bodyHtml, noteTitle);
+
 
     setShowDownloadMenu(false);
   };
@@ -122,9 +124,7 @@ export default function NoteEditor() {
         {/* // Download menu     */}
         {showDownloadMenu && (
           <div className="absolute top-10 z-20 right-0 w-fit flex flex-col mt-2 bg-[var(--bg-primary)] border border-[var(--border)] rounded-md shadow-lg" style={{ minWidth: "150px" }}>
-            <button className="w-full text-left px-4 py-1 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]" onClick={() => handleFileDownload("pdf")}>
-              PDF
-            </button>
+       
             <button className="w-full text-left px-4 py-1 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]" onClick={() => handleFileDownload("txt")}>
               TXT
             </button>
@@ -132,7 +132,7 @@ export default function NoteEditor() {
               Markdown
             </button>
             <button className="w-full text-left px-4 py-1 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]" onClick={() => handleFileDownload("html")}>
-              HTML
+              {`HTML (Best)`}
             </button>
           </div>
         )}
@@ -146,7 +146,7 @@ export default function NoteEditor() {
       <EditorMenuBar editor={editor} />
       <div className="flex-1 max-h-[calc(100vh-250px)] scrollbar overflow-y-auto px-4 pb-4">
         <div className="prose prose-invert max-w-none">
-          <EditorContent   editor={editor} />
+          <EditorContent editor={editor} />
         </div>
       </div>
     </div>

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNotes } from "../contexts/NotesContext";
 import { useSettings } from "../contexts/SettingsContext";
 import { FiPlus, FiSettings, FiChevronLeft, FiChevronRight, FiTrash2 } from "react-icons/fi";
 import DeleteConfirmation from "./DeleteConfirmation";
+import Tippy from "@tippyjs/react";
 
 import PropTypes from "prop-types";
 
@@ -24,23 +25,40 @@ export default function Sidebar({ onOpenSettings }) {
     }
   };
 
+    useEffect(() => {
+      console.log('KeyPress Listener Triggered');
+      const handleKeyDown = (e) => {
+        if (e.altKey && e.key.toLowerCase() === 'n') {
+          console.log('Alt + N pressed');
+          e.preventDefault();
+          addNote();
+        }
+      };
+  
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+  
+
   return (
     <>
       <div className={`${isCollapsed ? "w-16" : "w-64"} h-screen bg-[var(--bg-primary)] flex flex-col transition-all duration-300`}>
         <div className="flex items-center justify-between p-4">
           {!isCollapsed && (
-            <button
-              onClick={addNote}
-              className="flex-1 p-2 bg-[var(--button-primary)] text-[var(--bg-primary)] rounded-lg flex items-center justify-center hover:text-[var(--text-primary)] hover:bg-[var(--button-secondary)] transition-colors text-sm">
-              <FiPlus className="mr-2" /> New Note
-            </button>
+            <Tippy className="tooltip"  placement="right" content="Alt + N">
+              <button
+                onClick={addNote}
+                className="flex-1 p-2 bg-[var(--button-primary)] text-[var(--bg-primary)] rounded-lg flex items-center justify-center hover:text-[var(--text-primary)] hover:bg-[var(--button-secondary)] transition-colors text-sm">
+                <FiPlus className="mr-2" /> New Note
+              </button>
+            </Tippy>
           )}
           <button onClick={() => setIsCollapsed(!isCollapsed)} className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-lg">
             {isCollapsed ? <FiChevronRight size={20} /> : <FiChevronLeft size={20} />}
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 scrollbar overflow-y-auto">
           {notes.map((note, index) => (
             <div
               key={note.id}

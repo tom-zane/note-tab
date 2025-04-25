@@ -246,3 +246,14 @@ body {
   background: var(--bg-tertiary);
   font-weight: bold;
 }
+
+/* Tooltip : Tippy */
+.tooltip {
+  background-color: var(--button-primary);
+  color: var(--bg-primary);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 300;
+  white-space: nowrap;
+}

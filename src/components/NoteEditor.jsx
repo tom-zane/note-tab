@@ -88,7 +88,7 @@ export default function NoteEditor() {
 
     if (fileType === "txt") downloadAsTxt(bodyHtml, noteTitle);
     if (fileType === "html") downloadAsHTML(bodyHtml, noteTitle);
-    if (fileType === "markdown") downloadAsMarkdown(bodyHtml, noteTitle);
+    if (fileType === "md") downloadAsMarkdown(bodyHtml, noteTitle);
     if (fileType === "pdf") downloadAsPDF(bodyHtml, noteTitle);
 
     setShowDownloadMenu(false);

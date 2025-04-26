@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import { v4 as uuidv4 } from 'uuid';
+
 const NotesContext = createContext();
 
 export function NotesProvider({ children }) {
@@ -24,10 +26,12 @@ export function NotesProvider({ children }) {
 
   const addNote = () => {
     console.log('addNote triggered =====');
+    console.log('uuid', uuidv4());
     const newNote = {
-      id: Date.now(),
-      title: 'Untitled Note',
-      body: '',
+      id: uuidv4(),
+      note_title: 'Untitled Note',
+      note_body: '',
+      date_created: new Date().toISOString()
     };
     console.log("🚀 ~ addNote ~ newNote:", newNote)
     

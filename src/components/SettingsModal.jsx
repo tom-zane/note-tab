@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CryptoJS from "crypto-js";
 import PropTypes from "prop-types";
 
 // icons
-import { FiX, FiSave, FiDownload, FiUpload } from "react-icons/fi";
-import { IoLogoWhatsapp } from "react-icons/io5";
+
+import { IoLogoWhatsapp, IoDiamondOutline } from "react-icons/io5";
+import { FiX, FiSave, FiDownload, FiUpload, FiCheck, FiX as FiCross, FiLoader } from 'react-icons/fi';
 import { FaTelegram } from "react-icons/fa";
 import { SiBuymeacoffee } from "react-icons/si";
 import { MdEmail, MdDelete } from "react-icons/md";
@@ -16,6 +17,42 @@ import { useNotes } from "../contexts/NotesContext";
 import { useLinks } from "../contexts/LinksContext";
 import { useRadio } from "./../contexts/RadioContext";
 
+const BASE_URL = 'https://notes-backend.aryanue195035ece.workers.dev';
+
+async function checkStatus() {
+  console.log("check status called");
+  try {
+    const res = await fetch(`${BASE_URL}/status`);
+    console.log('res', res);
+    if (!res.ok) {
+      console.error(`Server responded with status: ${res.status}`);
+      return false;
+    }
+    const data = await res.json();
+    return data.status === 'ok';
+  } catch (err) {
+    console.error('Error checking server status:', err);
+    return false;
+  }
+}
+
+async function validateToken(token) {
+  try {
+    const res = await fetch(`${BASE_URL}/validate-token`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await res.json();
+    return data.valid === true;
+  } catch (err) {
+    console.error('Error validating token:', err);
+    return false;
+  }
+}
+
 export default function SettingsModal({ onClose }) {
   // Radio Setting States
   const [isStationListOpen, setIsStationListOpen] = useState(true);
@@ -25,7 +62,7 @@ export default function SettingsModal({ onClose }) {
   const { addStation, deleteStation } = useRadio();
 
   const { settings, updateSettings, themes, clockThemes, fonts } = useSettings();
-  const { notes, setNotes, setActiveNoteId } = useNotes();
+  const { notes, setNotes, setActiveNoteId, isSyncing, lastSyncTime } = useNotes();
   const { links, setLinks } = useLinks();
 
   const [tempSettings, setTempSettings] = useState(settings);
@@ -33,6 +70,46 @@ export default function SettingsModal({ onClose }) {
   const [importPassword, setImportPassword] = useState("");
   const [showExportDialog, setShowExportDialog] = useState(false);
   const [showImportDialog, setShowImportDialog] = useState(false);
+
+  const [licenseKey, setLicenseKey] = useState(() => localStorage.getItem('licenseKey') || '');
+  const [isValidatingLicense, setIsValidatingLicense] = useState(false);
+  const [isLicenseValid, setIsLicenseValid] = useState(false);
+  const [serverStatus, setServerStatus] = useState(null);
+
+
+  
+  useEffect(() => {
+    checkStatus().then(setServerStatus);
+    
+    if (licenseKey) {
+      validateLicenseKey(licenseKey);
+    }
+  }, []);
+
+  const validateLicenseKey = async (key) => {
+    setIsValidatingLicense(true);
+    const isValid = await validateToken(key);
+    setIsLicenseValid(isValid);
+    setIsValidatingLicense(false);
+    
+    if (isValid) {
+      localStorage.setItem('licenseKey', key);
+      syncWithServer(key);
+    } else {
+      localStorage.removeItem('licenseKey');
+    }
+  };
+
+  const handleLicenseKeyChange = (e) => {
+    const key = e.target.value;
+    setLicenseKey(key);
+    if (key.length === 32) {
+      validateLicenseKey(key);
+    } else {
+      setIsLicenseValid(false);
+    }
+  };
+
 
   const getPasswordStrength = (password) => {
     if (!password) return "None";
@@ -153,6 +230,68 @@ export default function SettingsModal({ onClose }) {
         </div>
 
         <div className="space-y-4">
+          <div className="mb-8 p-4 bg-[var(--bg-tertiary)] rounded-lg border border-[var(--border)]">
+            <div className="flex items-center gap-2 mb-4">
+              <IoDiamondOutline className="text-[var(--text-accent)]" size={20} />
+              <h3 className="text-[var(--text-primary)] font-mono">Premium Features</h3>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-[var(--text-secondary)]">Server Status:</span>
+                {serverStatus === null ? (
+                  <FiLoader className="animate-spin text-[var(--text-accent)]" size={14} />
+                ) : serverStatus ? (
+                  <span className="text-green-500 flex items-center gap-1">
+                    <FiCheck size={14} /> Online
+                  </span>
+                ) : (
+                  <span className="text-red-500 flex items-center gap-1">
+                    <FiCross size={14} /> Offline
+                  </span>
+                )}
+              </div>
+
+              <div className="relative">
+                <input
+                  type="text"
+                  value={licenseKey}
+                  onChange={handleLicenseKeyChange}
+                  placeholder="Enter your 32-character license key"
+                  maxLength={32}
+                  className="w-full p-2 pr-10 rounded border bg-[var(--bg-tertiary)] border-[var(--border)] text-[var(--text-primary)] font-mono text-sm"
+                />
+                <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                  {isValidatingLicense ? <FiLoader className="animate-spin text-[var(--text-accent)]" size={16} /> : licenseKey && (isLicenseValid ? <FiCheck className="text-green-500" size={16} /> : <FiCross className="text-red-500" size={16} />)}
+                </div>
+              </div>
+                {isLicenseValid === false && !isValidatingLicense && licenseKey !== ""  && <p className="text-red-500 text-sm" >This license key is not valid. Please contact support.</p>}
+
+              {isLicenseValid && (
+                <div className="text-sm space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[var(--text-secondary)]">Sync Status:</span>
+                    {isSyncing ? (
+                      <span className="flex items-center gap-1 text-[var(--text-accent)]">
+                        <FiLoader className="animate-spin" size={14} />
+                        Syncing...
+                      </span>
+                    ) : (
+                      <span className="text-green-500 flex items-center gap-1">
+                        <FiCheck size={14} />
+                        Synced
+                      </span>
+                    )}
+                  </div>
+                  {lastSyncTime && <div className="text-[var(--text-secondary)] text-xs">Last synced: {new Date(lastSyncTime).toLocaleString()}</div>}
+                </div>
+              )}
+
+              <a href="https://your-website.com/purchase" target="_blank" rel="noopener noreferrer" className="block w-full text-center py-2 bg-[var(--button-primary)] text-[var(--bg-primary)] rounded  transition-colors hover:text-[var(--button-primary)] hover:bg-[var(--bg-primary)] text-sm">
+                Get Premium License
+              </a>
+            </div>
+          </div>
           {/* ======================================================================================== */}
           {/* Theme Settings Header */}
           <h2 className="mb-2 font-semibold text-xl border-b-2 border-b-[var(--border)]">Theme</h2>
@@ -266,12 +405,12 @@ export default function SettingsModal({ onClose }) {
                 <div className="flex max-h-32 overflow-x-clip overflow-y-scroll scrollbar flex-col p-2 bg-[var(--bg-secondary)] rounded-md">
                   {Array.from(JSON.parse(localStorage.getItem("radioStations"))).map((station, i) => {
                     return (
-                      <div key={station.name}  className="flex w-full py-1 border-b-[1px] border-b-[var(--border)] items-center justify-between  ">
+                      <div key={station.name} className="flex w-full py-1 border-b-[1px] border-b-[var(--border)] items-center justify-between  ">
                         <span className="text-xs w-[80%] truncate" value={station.url}>
                           {i + 1}. {station.genre} | {station.name}
                         </span>
                         <button onClick={() => deleteStation(i)} className="text-lg  py-1 flex items-center justify-center w-[15%] text-white rounded-sm  cursor-pointer hover:bg-[#cb4335] bg-[#e74c3c]">
-                        < RiDeleteBinLine />
+                          <RiDeleteBinLine />
                         </button>
                       </div>
                     );
@@ -420,10 +559,10 @@ export default function SettingsModal({ onClose }) {
           <h2 className="mb-2 font-semibold text-xl border-b-2 border-b-[var(--border)]">Backup/Restore</h2>
 
           <div className="flex gap-4 mb-6">
-            <button onClick={() => setShowExportDialog(prev => !prev)} className="px-4 py-2 bg-[var(--button-secondary)] text-[var(--text-primary)] rounded-lg flex items-center gap-2 hover:bg-opacity-80">
+            <button onClick={() => setShowExportDialog((prev) => !prev)} className="px-4 py-2 bg-[var(--button-secondary)] text-[var(--text-primary)] rounded-lg flex items-center gap-2 hover:bg-opacity-80">
               <FiDownload size={14} /> Export Settings
             </button>
-            <button onClick={() => setShowImportDialog(prev => !prev)} className="px-4 py-2 bg-[var(--button-secondary)] text-[var(--text-primary)] rounded-lg flex items-center gap-2 hover:bg-opacity-80">
+            <button onClick={() => setShowImportDialog((prev) => !prev)} className="px-4 py-2 bg-[var(--button-secondary)] text-[var(--text-primary)] rounded-lg flex items-center gap-2 hover:bg-opacity-80">
               <FiUpload size={14} /> Import Settings
             </button>
           </div>

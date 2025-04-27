@@ -60,7 +60,7 @@ export default function NoteEditor() {
     content: activeNote?.body || "",
     onUpdate: ({ editor }) => {
       if (activeNote) {
-        updateNote(activeNoteId, { body: editor.getHTML() });
+        updateNote(activeNoteId, { note_body: editor.getHTML() });
       }
     },
     editorProps: {

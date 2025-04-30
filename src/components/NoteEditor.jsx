@@ -14,8 +14,6 @@ import Placeholder from "@tiptap/extension-placeholder";
 import OrderedList from "@tiptap/extension-ordered-list";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 
-import { jsPDF } from "jspdf";
-
 import { IoCodeDownloadOutline } from "react-icons/io5";
 
 import EditorMenuBar from "./EditorMenuBar";
@@ -108,8 +106,8 @@ export default function NoteEditor() {
         {/*  Title input */}
         <input
           type="text"
-          value={activeNote.title}
-          onChange={(e) => updateNote(activeNoteId, { title: e.target.value })}
+          value={activeNote.note_title}
+          onChange={(e) => updateNote(activeNoteId, { note_title: e.target.value })}
           onKeyDown={handleTitleKeyDown}
           className="w-full bg-transparent border-none outline-none font-mono  text-[var(--text-primary)]"
           style={{ fontSize: `${settings.headerSize}px` }}

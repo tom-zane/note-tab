@@ -69,7 +69,7 @@ export default function Sidebar({ onOpenSettings }) {
               ) : (
                 <>
                   <h3 className={`font-mono  ${activeNoteId === note.id ? "text-[var(--bg-primary)]" : "text-[var(--text-primary)]"}  truncate`} style={{ fontSize: `${settings.sidebarSize}px` }}>
-                    {note.title || "Untitled Note"}
+                    {note.note_title || "Untitled Note"}
                   </h3>
                   <button onClick={(e) => handleDeleteClick(e, note)} className="text-[var(--text-secondary)] hover:text-[var(--button-danger)] p-1 rounded">
                     <FiTrash2 size={14} />
@@ -86,7 +86,7 @@ export default function Sidebar({ onOpenSettings }) {
         </button>
       </div>
 
-      {noteToDelete && <DeleteConfirmation noteTitle={noteToDelete.title} onConfirm={handleConfirmDelete} onCancel={() => setNoteToDelete(null)} />}
+      {noteToDelete && <DeleteConfirmation noteTitle={noteToDelete.note_title} onConfirm={handleConfirmDelete} onCancel={() => setNoteToDelete(null)} />}
     </>
   );
 }

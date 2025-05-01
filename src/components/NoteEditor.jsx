@@ -28,10 +28,13 @@ export default function NoteEditor() {
   const bodyRef = useRef(null);
   // Find the active note from the notes array
   const activeNote = notes.find((note) => note.id === activeNoteId);
+  
 
   useEffect(() => {
-    if (activeNote) {
-      editor.commands.setContent(activeNote?.body);
+    console.log(activeNoteId, activeNote)
+    
+    if (activeNote !== undefined && activeNote !== null)  {
+      editor.commands.setContent(activeNote?.note_body);
     }
   }, [activeNoteId]);
 

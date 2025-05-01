@@ -230,7 +230,7 @@ export default function SettingsModal({ onClose }) {
         </div>
 
         <div className="space-y-4">
-          <div className="mb-8 p-4 bg-[var(--bg-tertiary)] rounded-lg border border-[var(--border)]">
+          {/* <div className="mb-8 p-4 bg-[var(--bg-tertiary)] rounded-lg border border-[var(--border)]">
             <div className="flex items-center gap-2 mb-4">
               <IoDiamondOutline className="text-[var(--text-accent)]" size={20} />
               <h3 className="text-[var(--text-primary)] font-mono">Premium Features</h3>
@@ -291,7 +291,7 @@ export default function SettingsModal({ onClose }) {
                 Get Premium License
               </a>
             </div>
-          </div>
+          </div> */}
           {/* ======================================================================================== */}
           {/* Theme Settings Header */}
           <h2 className="mb-2 font-semibold text-xl border-b-2 border-b-[var(--border)]">Theme</h2>

@@ -21,7 +21,7 @@ import PomodoroModal from "./components/modals/PomodoroModal";
 
 function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isPomodoroModalOpen, setIsPomodoroModalOpen] = useState(true);
+  const [isPomodoroModalOpen, setIsPomodoroModalOpen] = useState(false);
 
   return (
     <SettingsProvider>

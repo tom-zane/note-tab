@@ -3,7 +3,7 @@ import { FiX } from "react-icons/fi";
 import { TbCancel } from "react-icons/tb";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-export default function DeleteConfirmation({ onConfirm, onCancel, noteTitle }) {
+export default function DeleteConfirmationModal({ onConfirm, onCancel, noteTitle }) {
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-[var(--bg-primary)] rounded-lg p-6 w-96 text-[var(--text-primary)]">

@@ -365,11 +365,13 @@ export const defaultSettings = {
     sidebarSize: 13,
     linkSize: 13,
     theme: 'dark',
-    customTheme: null,
     font: 'JetBrains Mono',
     showSeconds: false,
     showLinks: true,
     showClock: true,
     showRadio: true,
-    clockTheme: 'minimal'
+    clockTheme: 'minimal',
+    focusTime: 25, 
+    breakTime: 5
+
 };

@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { useRadio } from "./../contexts/RadioContext";
+import { useRadio } from "../../contexts/RadioContext";
 import { AiFillPlayCircle, AiFillPauseCircle, AiOutlineStepBackward, AiOutlineStepForward, AiOutlineSwap, AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import "tailwindcss/tailwind.css";
 
 import { FaVolumeDown, FaVolumeMute, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
-import { useSettings } from "../contexts/SettingsContext";
+import { useSettings } from "../../contexts/SettingsContext";
 
 export default function RadioPlayer() {
   // Context

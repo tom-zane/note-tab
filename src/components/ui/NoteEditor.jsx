@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { useNotes } from "../contexts/NotesContext";
-import { useSettings } from "../contexts/SettingsContext";
+import { useNotes } from "../../contexts/NotesContext";
+import { useSettings } from "../../contexts/SettingsContext";
 
 // tiptap editor import
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -18,7 +18,7 @@ import { IoCodeDownloadOutline } from "react-icons/io5";
 
 import EditorMenuBar from "./EditorMenuBar";
 
-import { downloadAsHTML, downloadAsTxt, downloadAsMarkdown } from "./../utils/downloadSingleFileHelper";
+import { downloadAsHTML, downloadAsTxt, downloadAsMarkdown } from "../../utils/file-download-helper";
 
 export default function NoteEditor() {
   const [showDownloadMenu, setShowDownloadMenu] = useState(false);
@@ -31,7 +31,7 @@ export default function NoteEditor() {
   
 
   useEffect(() => {
-    console.log(activeNoteId, activeNote)
+  
     
     if (activeNote !== undefined && activeNote !== null)  {
       editor.commands.setContent(activeNote?.note_body);
@@ -86,8 +86,6 @@ export default function NoteEditor() {
 
   //* Function to handle file download
   const handleFileDownload = (fileType, noteTitle = activeNote.title, bodyHtml = editor.getHTML()) => {
-    console.log("fileType", fileType);
-    console.log("noteTitle", noteTitle);
 
     if (fileType === "txt") downloadAsTxt(bodyHtml, noteTitle);
     if (fileType === "html") downloadAsHTML(bodyHtml, noteTitle);

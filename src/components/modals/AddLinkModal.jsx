@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLinks } from '../contexts/LinksContext';
+import { useLinks } from '../../contexts/LinksContext';
 import { FiX } from 'react-icons/fi';
 
 export default function AddLinkModal({ onClose }) {

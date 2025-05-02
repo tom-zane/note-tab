@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSettings } from '../contexts/SettingsContext';
+import { useSettings } from '../../contexts/SettingsContext';
 import { FiX } from 'react-icons/fi';
 
 export default function AddThemeModal({ onClose }) {

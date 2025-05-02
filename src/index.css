@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
 }
 
 body {
@@ -19,25 +19,22 @@ body {
 
 .dark body {
   background-color: #1a1a1a;
-  color: #ffffff ;
-}
-
-
-/* Vertical Volume Slider ===============================  */
-.ios-slider {
-  --val: 50;
+  color: #ffffff;
 }
 
 /* Highlight */
 
 mark {
-
   border-radius: 0.1rem !important;
   padding: 0 0.1rem !important;
   color: white !important;
-
 }
 
+/*! Radio Volume Slider ============================================ */
+
+.ios-slider {
+  --val: 50;
+}
 .ios-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 16px;
@@ -45,7 +42,7 @@ mark {
   background: transparent;
   cursor: pointer;
   border-radius: 9999px;
-  
+
   position: relative;
   z-index: 1;
 }
@@ -53,7 +50,11 @@ mark {
 .ios-slider::-webkit-slider-runnable-track {
   height: 8px;
   border-radius: 9999px;
-  background: linear-gradient(to right, var(--button-primary) calc(var(--val) * 1%), var(--bg-secondary) 0%);
+  background: linear-gradient(
+    to right,
+    var(--button-primary) calc(var(--val) * 1%),
+    var(--bg-secondary) 0%
+  );
 }
 
 .ios-slider::-moz-range-thumb {
@@ -70,11 +71,15 @@ mark {
 .ios-slider::-moz-range-track {
   height: 8px;
   border-radius: 9999px;
-  background: linear-gradient(to right, var(--button-primary) calc(var(--val) * 1%), var(--bg-secondary) 0%);
+  background: linear-gradient(
+    to right,
+    var(--button-primary) calc(var(--val) * 1%),
+    var(--bg-secondary) 0%
+  );
 }
 
 /* ================================================================== */
-/* ================================================================== */
+/*!  Editor CSS | DO NOT CHANGE====================================== */
 
 .ProseMirror {
   min-height: 100%;
@@ -107,12 +112,24 @@ mark {
   margin: 1.5em 0 0.5em;
 }
 
-.ProseMirror h1 { font-size: 2em; }
-.ProseMirror h2 { font-size: 1.5em; }
-.ProseMirror h3 { font-size: 1.17em; }
-.ProseMirror h4 { font-size: 1em; }
-.ProseMirror h5 { font-size: 0.83em; }
-.ProseMirror h6 { font-size: 0.67em; }
+.ProseMirror h1 {
+  font-size: 2em;
+}
+.ProseMirror h2 {
+  font-size: 1.5em;
+}
+.ProseMirror h3 {
+  font-size: 1.17em;
+}
+.ProseMirror h4 {
+  font-size: 1em;
+}
+.ProseMirror h5 {
+  font-size: 0.83em;
+}
+.ProseMirror h6 {
+  font-size: 0.67em;
+}
 
 .ProseMirror ul,
 .ProseMirror ol {
@@ -152,13 +169,21 @@ mark {
   position: relative;
 }
 
-.ProseMirror ul[data-type="taskList"] li > label input[type="checkbox"]:checked {
+.ProseMirror
+  ul[data-type="taskList"]
+  li
+  > label
+  input[type="checkbox"]:checked {
   background-color: var(--text-accent);
   border-color: var(--text-accent);
 }
 
-.ProseMirror ul[data-type="taskList"] li > label input[type="checkbox"]:checked::after {
-  content: '';
+.ProseMirror
+  ul[data-type="taskList"]
+  li
+  > label
+  input[type="checkbox"]:checked::after {
+  content: "";
   position: absolute;
   left: 4px;
   top: 1px;
@@ -257,7 +282,7 @@ mark {
   font-weight: bold;
 }
 
-/* Tooltip : Tippy */
+/*! Tooltip : Tippy ================================================== */
 .tooltip {
   background-color: var(--button-primary);
   color: var(--bg-primary);

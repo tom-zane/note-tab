@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { useLinks } from '../contexts/LinksContext';
-import { useSettings } from '../contexts/SettingsContext';
+import { useLinks } from '../../contexts/LinksContext';
+import { useSettings } from '../../contexts/SettingsContext';
 import { FiPlus, FiTrash2 } from 'react-icons/fi';
-import AddLinkModal from './AddLinkModal';
+
+import AddLinkModal from './../modals/AddLinkModal';
 
 
 export default function LinksContainer() {

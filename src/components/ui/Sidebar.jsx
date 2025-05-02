@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useNotes } from "../contexts/NotesContext";
-import { useSettings } from "../contexts/SettingsContext";
+import { useNotes } from "../../contexts/NotesContext";
+import { useSettings } from "../../contexts/SettingsContext";
 import { FiPlus, FiSettings, FiChevronLeft, FiChevronRight, FiTrash2 } from "react-icons/fi";
-import DeleteConfirmation from "./DeleteConfirmation";
+import DeleteConfirmation from "../modals/DeleteConfirmationModal";
 import Tippy from "@tippyjs/react";
 
 import PropTypes from "prop-types";
@@ -25,8 +25,8 @@ export default function Sidebar({ onOpenSettings }) {
     }
   };
 
+  //  Detecting Alt + N key press to add a new note
     useEffect(() => {
-      console.log('KeyPress Listener Triggered');
       const handleKeyDown = (e) => {
         if (e.altKey && e.key.toLowerCase() === 'n') {
           console.log('Alt + N pressed');

@@ -50,4 +50,6 @@ Email: arubk744@gmail.com
 
 Signal Private Messenger:
 
+![signal_chat](https://github.com/user-attachments/assets/f87f8034-8163-472a-972f-84ee0684b076)
+
 

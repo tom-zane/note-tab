@@ -97,7 +97,7 @@ export default function NoteEditor() {
 
   // If there is no active note, display a message
   if (!activeNote) {
-    return <div className="flex h-full items-center justify-center text-[var(--text-secondary)]">Select a note or create a new one</div>;
+    return <div className="flex h-64 items-center justify-center text-[var(--text-secondary)]">Select a note or create a new one</div>;
   }
 
   // Return the note editor component

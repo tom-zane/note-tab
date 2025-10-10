@@ -28,7 +28,7 @@ function App() {
       <RadioProvider>
         <NotesProvider>
           <LinksProvider>
-            <div className="flex h-screen bg-[var(--bg-primary)]">
+            <div className="flex h-screen object-fit bg-[url('/assets/default-background.jpg')]">
               <Sidebar onOpenSettings={() => setIsSettingsOpen(true)} />
               <div className="flex-1 bg-[var(--bg-secondary)]">
                 {/* clock and radio */}

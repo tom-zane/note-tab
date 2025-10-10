@@ -13,7 +13,7 @@ export default function RadioPlayer() {
 
   // JSX
   return (
-    <div className={`w-3xl   flex-col justify-center items-center ${settings.showRadio === false ? "hidden" : "flex" }   px-6 py-2  bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-md`}>
+    <div className={`w-3xl   flex-col justify-center items-center ${settings.showRadio === false ? "hidden" : "flex" }   px-6 py-2  bg-[var(--bg-tertiary)] backdrop-blur-2xl text-[var(--text-primary)] rounded-md`}>
       {stations && stations.length !== 0 ? (
         <>
           <div className="flex items-center flex-row  space-x-4">
@@ -34,7 +34,7 @@ export default function RadioPlayer() {
                 <button onClick={prevStation} className="text-xl rounded-md p-1  hover:bg-[var(--bg-tertiary)]">
                   <AiOutlineStepBackward />
                 </button>
-                <button onClick={togglePlay} className="text-3xl bg-[var(--button-primary)] text-[var(--bg-primary)] rounded-full hover:bg-[var(--button-secondary)] hover:text-[var(--text-primary)]">
+                <button onClick={togglePlay} className="text-3xl bg-[var(--button-primary)] text-[var(--text-primary)] rounded-full hover:bg-[var(--button-secondary)] hover:text-[var(--text-primary)]">
                   {isPlaying ? <AiFillPauseCircle /> : <AiFillPlayCircle />}
                 </button>
                 <button onClick={nextStation} className="text-xl rounded-md p-1  hover:bg-[var(--bg-tertiary)]">

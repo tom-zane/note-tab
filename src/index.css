@@ -9,6 +9,8 @@
 body {
   margin: 0;
   min-width: 320px;
+
+  object-fit: contain;
   min-height: 100vh;
 }
 
@@ -28,6 +30,20 @@ mark {
   border-radius: 0.1rem !important;
   padding: 0 0.1rem !important;
   color: white !important;
+}
+
+select {
+  background: gray;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  outline: none;
+
+}
+
+option {
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 /*! Radio Volume Slider ============================================ */
@@ -145,6 +161,7 @@ mark {
 .ProseMirror ul[data-type="taskList"] li {
   display: flex;
   align-items: flex-start;
+   color: var(--text-primary);
   margin: 0.5em 0;
   gap: 0.5rem;
 }
@@ -174,7 +191,8 @@ mark {
   li
   > label
   input[type="checkbox"]:checked {
-  background-color: var(--text-accent);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
   border-color: var(--text-accent);
 }
 
@@ -189,7 +207,8 @@ mark {
   top: 1px;
   width: 6px;
   height: 10px;
-  border: solid var(--bg-primary);
+  border: solid var(--text-accent);
+  color: var(--text-primary);
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
@@ -285,7 +304,7 @@ mark {
 /*! Tooltip : Tippy ================================================== */
 .tooltip {
   background-color: var(--button-primary);
-  color: var(--bg-primary);
+  color: var(--text-primary);
   border-radius: 0.25rem;
   padding: 0.25rem 0.5rem;
   font-size: 0.7rem;

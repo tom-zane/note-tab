@@ -339,10 +339,10 @@ export default function SettingsModal({ onClose, openPomodoroModal }) {
             <select
               value={tempSettings.theme}
               onChange={(e) => handleChange("theme", e.target.value)}
-              className="p-1.5 text-sm rounded border bg-[var(--bg-tertiary)] border-[var(--border)] text-[var(--text-primary)]"
+              className="p-1.5 text-sm rounded border"
             >
               {Object.entries(themes).map(([key, theme]) => (
-                <option key={key} value={key}>
+                <option  key={key} value={key}>
                   {theme.name}
                 </option>
               ))}
@@ -363,7 +363,7 @@ export default function SettingsModal({ onClose, openPomodoroModal }) {
             <select
               value={tempSettings.font}
               onChange={(e) => handleChange("font", e.target.value)}
-              className="p-1.5 text-sm rounded border bg-[var(--bg-tertiary)] border-[var(--border)] text-[var(--text-primary)]"
+              className="p-1.5 text-sm rounded border"
             >
               {Object.keys(fonts).map((font) => (
                 <option key={font} value={font}>
@@ -461,12 +461,11 @@ export default function SettingsModal({ onClose, openPomodoroModal }) {
 
           {/* ======================================================================================== */}
           <h2 className="mb-2 font-semibold text-xl border-b-2 border-b-[var(--border)]">
-            Pomodoro{" "}
+            Pomodoro
           </h2>
 
           <div className="grid grid-cols-2 gap-3 items-center">
             <label className="font-mono text-sm text-[var(--text-primary)]">
-              {" "}
               Break Time
             </label>
             <div className="flex items-center gap-3">
@@ -511,7 +510,7 @@ export default function SettingsModal({ onClose, openPomodoroModal }) {
 <span className="text-[var(--text-accent)] text-lg" >View Pomodoro Stats:</span>
           <button
             onClick={handlePomodoroModalOpening}
-            className="bg-[var(--button-primary)] text-[var(--bg-primary)] px-6 py-3 rounded-md cursor-pointer hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] "
+            className="bg-[var(--button-primary)] text-[var(--text-primary)] px-6 py-3 rounded-md cursor-pointer hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] "
           >
             POMODORO STATS
           </button>
@@ -623,7 +622,7 @@ export default function SettingsModal({ onClose, openPomodoroModal }) {
               />
               <button
                 onClick={() => addStation(nameInput, genreInput, urlInput)}
-                className="w-full py-1 bg-[var(--button-primary)] hover:bg-[var(--button-secondary)]  rounded text-[var(--bg-primary)] hover:text-[var(--text-primary)] text-sm"
+                className="w-full py-1 bg-[var(--button-primary)] hover:bg-[var(--button-secondary)]  rounded text-[var(--text-primary)] hover:text-[var(--text-primary)] text-sm"
               >
                 Save Station
               </button>
@@ -918,7 +917,7 @@ export default function SettingsModal({ onClose, openPomodoroModal }) {
               <div className="flex justify-end">
                 <button
                   onClick={() => setShowImportDialog(false)}
-                  className="px-3 py-1.5 bg-[var(--button-secondary)] text-[var(--text-primary)] hover:bg-[var(--button-primary)] mt-4 rounded"
+                  className="px-3 py-1.5 bg-[var(--button-primary)] text-[var(--text-primary)] hover:bg-[var(--button-primary)] mt-4 rounded"
                 >
                   Cancel
                 </button>
@@ -942,7 +941,7 @@ export default function SettingsModal({ onClose, openPomodoroModal }) {
           target="_blank"
           rel="noopener noreferrer"
           href="https://wa.me/916006209674"
-          className="px-4 flex flex-row w-full  py-2 bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:text-[var(--text-primary)] hover:bg-[var(--button-secondary)] mt-4 rounded"
+          className="px-4 flex flex-row w-full  py-2 bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:text-[var(--text-primary)] hover:bg-[var(--button-secondary)] mt-4 rounded"
         >
           <IoLogoWhatsapp className="mr-1.5" size={24} /> WhatsApp
         </a>
@@ -982,7 +981,7 @@ export default function SettingsModal({ onClose, openPomodoroModal }) {
         <div className="flex justify-end mt-6">
           <button
             onClick={handleSave}
-            className="px-6 py-3 text-sm bg-[var(--button-primary)] text-[var(--bg-primary)] hover:text-[var(--text-primary)] hover:bg-[var(--button-secondary)] rounded-lg flex items-center hover:bg-opacity-80"
+            className="px-6 py-3 text-sm bg-[var(--button-primary)] text-[var(--text-primary)] hover:text-[var(--text-primary)] hover:bg-[var(--button-secondary)] rounded-lg flex items-center hover:bg-opacity-80"
           >
             <FiSave className="mr-1.5" size={14} /> Save Settings
           </button>

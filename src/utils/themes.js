@@ -2,31 +2,55 @@
 //* Default theme ===============================================================================================
 
 export const defaultTheme = {
-    name: 'Dark',
-    colors: {
-      bg: {
-        primary: '#2c2e31',
-        secondary: '#252729',
-        tertiary: '#1f2123'
-      },
-      text: {
-        primary: '#d1d0c5',
-        secondary: '#646669',
-        accent: '#e2b714'
-      },
-      button: {
-        primary: '#e2b714',
-        secondary: '#646669',
-        danger: '#ca4754'
-      },
-      border: '#646669',
-      overlay: 'rgba(0, 0, 0, 0.5)'
-    }
-  };
+  name: 'Dark',
+  colors: {
+    bg: {
+      primary: '#2c2e31',
+      secondary: '#252729',
+      tertiary: '#1f2123'
+    },
+    text: {
+      primary: '#d1d0c5',
+      secondary: '#646669',
+      accent: '#e2b714'
+    },
+    button: {
+      primary: '#e2b714',
+      secondary: '#646669',
+      danger: '#ca4754'
+    },
+    border: '#646669',
+    overlay: 'rgba(0, 0, 0, 0.8)'
+  }
+};
 
 //*  ==============================================================================================================
 //*  Themes =======================================================================================================
 export const themes = {
+  glass: {
+    name: 'Glass',
+    colors: {
+      bg: {
+        primary: 'rgba(255, 255, 255, 0.15)',   // translucent base
+        secondary: 'rgba(255, 255, 255, 0.1)',  // slightly darker
+        tertiary: 'rgba(255, 255, 255, 0.05)'   // faint layer for cards/panels
+      },
+      text: {
+        primary: '#ffffff',        // bright text
+        secondary: '#d0d0d0',      // muted text
+        accent: '#00bcd4'          // cool glass-blue accent
+      },
+      button: {
+        primary: 'rgba(0, 188, 212, 0.9)',  // vibrant cyan glass
+        secondary: 'rgba(255, 255, 255, 0.2)', // subtle frosted
+        danger: 'rgba(234, 67, 53, 0.9)'       // red warning, slightly translucent
+      },
+      border: 'rgba(255, 255, 255, 0.2)',     // light border for contrast
+      overlay: 'rgba(0, 0, 0, 0.4)'           // darker overlay for dialogs
+    },
+    backgroundImage: 'url("/images/glass-bg.jpg")' // your glass texture / blur image
+  }
+  ,
   light: {
     name: 'Light',
     colors: {
@@ -334,23 +358,23 @@ export const themes = {
 
 //*  ==============================================================================================================
 //*  Clock Themes =================================================================================================
-export const clockThemes= {
-    minimal: 'Minimal',
-    digital: 'Digital',
-    analog: 'Analog',
-    modern: 'Modern',
-    retro: 'Retro'
+export const clockThemes = {
+  minimal: 'Minimal',
+  digital: 'Digital',
+  analog: 'Analog',
+  modern: 'Modern',
+  retro: 'Retro'
 };
 
 //*  ==============================================================================================================
 //*  Fonts ========================================================================================================
 
 export const fonts = {
-    'JetBrains Mono': "'JetBrains Mono', monospace",
-    'Fira Code': "'Fira Code', monospace",
-    'Source Code Pro': "'Source Code Pro', monospace",
-    'IBM Plex Mono': "'IBM Plex Mono', monospace",
-    'Space Mono': "'Space Mono', monospace"
+  'JetBrains Mono': "'JetBrains Mono', monospace",
+  'Fira Code': "'Fira Code', monospace",
+  'Source Code Pro': "'Source Code Pro', monospace",
+  'IBM Plex Mono': "'IBM Plex Mono', monospace",
+  'Space Mono': "'Space Mono', monospace"
 };
 
 //*  ==============================================================================================================
@@ -358,20 +382,20 @@ export const fonts = {
 
 export const defaultSettings = {
   syncEnabled: false,
-  
-    headerSize: 20,
-    bodySize: 14,
-    clockSize: 24,
-    sidebarSize: 13,
-    linkSize: 13,
-    theme: 'dark',
-    font: 'JetBrains Mono',
-    showSeconds: false,
-    showLinks: true,
-    showClock: true,
-    showRadio: true,
-    clockTheme: 'minimal',
-    focusTime: 25, 
-    breakTime: 5
+
+  headerSize: 20,
+  bodySize: 14,
+  clockSize: 24,
+  sidebarSize: 13,
+  linkSize: 13,
+  theme: 'dark',
+  font: 'JetBrains Mono',
+  showSeconds: false,
+  showLinks: false,
+  showClock: true,
+  showRadio: true,
+  clockTheme: 'minimal',
+  focusTime: 25,
+  breakTime: 5
 
 };

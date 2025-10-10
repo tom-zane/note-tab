@@ -27,10 +27,10 @@ export default function PomodoroModal({ onClose }) {
             onClick={() => {
               setTab("daily");
             }}
-            className={` w-1/3 py-2  transition-colors rounded-tl-md rounded-bl-md text-md font-semibold ${
+            className={` w-1/3 py-2  transition-colors rounded-tl-md rounded-bl-md text-md text-[var(--text-primary)] font-semibold ${
               tab === "daily"
-                ? "bg-[var(--text-accent)] text-[var(--bg-primary)]"
-                : "bg-[var(--bg-secondary)] text-[var(--text-accent)] "
+                ? "bg-[var(--bg-primary)] "
+                : "bg-[var(--bg-tertiary)]"
             } `}
           >
             Daily
@@ -39,10 +39,10 @@ export default function PomodoroModal({ onClose }) {
             onClick={() => {
               setTab("weekly");
             }}
-            className={` w-1/3 py-2  transition-colors text-md font-semibold ${
+            className={` w-1/3 py-2  transition-colors text-[var(--text-primary)] text-md font-semibold ${
               tab === "weekly"
-                ? "bg-[var(--text-accent)] text-[var(--bg-primary)]"
-                : "bg-[var(--bg-secondary)] text-[var(--text-accent)] "
+                ? "bg-[var(--bg-primary)] "
+                : "bg-[var(--bg-tertiary)]"
             } `}
           >
             Weekly
@@ -51,10 +51,10 @@ export default function PomodoroModal({ onClose }) {
             onClick={() => {
               setTab("monthly");
             }}
-            className={` w-1/3 py-2 text-md rounded-tr-md transition-colors rounded-br-md font-semibold ${
+            className={` w-1/3 py-2 text-md text-[var(--text-primary)] rounded-tr-md transition-colors rounded-br-md font-semibold ${
               tab === "monthly"
-                ? "bg-[var(--text-accent)] text-[var(--bg-primary)]"
-                : "bg-[var(--bg-secondary)] text-[var(--text-accent)] "
+                ? "bg-[var(--bg-primary)]"
+                : "bg-[var(--bg-tertiary)]  "
             } `}
           >
             Monthly

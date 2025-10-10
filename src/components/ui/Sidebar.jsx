@@ -45,10 +45,10 @@ export default function Sidebar({ onOpenSettings }) {
       <div className={`${isCollapsed ? "w-16" : "w-64"} h-screen bg-[var(--bg-primary)] flex flex-col transition-all duration-300`}>
         <div className="flex items-center justify-between p-4">
           {!isCollapsed && (
-            <Tippy className="tooltip"  placement="right" content="Alt + N">
+            <Tippy className="tooltip text-[var(--text-primary)]"  placement="right" content="Alt + N">
               <button
                 onClick={addNote}
-                className="flex-1 p-2 bg-[var(--button-primary)] text-[var(--bg-primary)] rounded-lg flex items-center justify-center hover:text-[var(--text-primary)] hover:bg-[var(--button-secondary)] transition-colors text-sm">
+                className="flex-1 p-2 bg-[var(--button-primary)] text-[var(--text-primary)] hover:opacity-90  hover:shadow-xl transition-all duration-300 rounded-lg flex items-center justify-center   text-sm">
                 <FiPlus className="mr-2" /> New Note
               </button>
             </Tippy>
@@ -68,7 +68,7 @@ export default function Sidebar({ onOpenSettings }) {
                 <span className="w-full text-center text-[var(--text-primary)]">{index + 1}</span>
               ) : (
                 <>
-                  <h3 className={`font-mono  ${activeNoteId === note.id ? "text-[var(--bg-primary)]" : "text-[var(--text-primary)]"}  truncate`} style={{ fontSize: `${settings.sidebarSize}px` }}>
+                  <h3 className={`font-mono  ${activeNoteId === note.id ? "text-[var(--text-primary)]" : "text-[var(--text-primary)]"}  truncate`} style={{ fontSize: `${settings.sidebarSize}px` }}>
                     {note.note_title || "Untitled Note"}
                   </h3>
                   <button onClick={(e) => handleDeleteClick(e, note)} className="text-[var(--text-secondary)] hover:text-[var(--button-danger)] p-1 rounded">
@@ -80,7 +80,7 @@ export default function Sidebar({ onOpenSettings }) {
           ))}
         </div>
 
-        <button onClick={onOpenSettings} className={`m-4 p-2 bg-[var(--button-secondary)] text-[var(--text-primary)] rounded-lg flex items-center justify-center hover:bg-opacity-80 transition-colors text-sm ${isCollapsed ? "px-2" : ""}`}>
+        <button onClick={onOpenSettings} className={`m-4 p-2 bg-[var(--button-primary)] text-[var(--text-primary)] rounded-lg flex items-center justify-center hover:opacity-90 hover:shadow-xl duration-300 transition-all text-sm ${isCollapsed ? "px-2" : ""}`}>
           <FiSettings className={isCollapsed ? "" : "mr-2"} />
           {!isCollapsed && "Settings"}
         </button>

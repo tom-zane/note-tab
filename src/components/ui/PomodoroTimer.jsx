@@ -67,10 +67,10 @@ export default function PomodoroTimer() {
       <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${
         isBreak 
           ? 'bg-[var(--button-secondary)] text-[var(--text-primary)]' 
-          : 'bg-[var(--button-primary)] text-[var(--bg-primary)]'
+          : 'bg-[var(--button-primary)] text-[var(--text-primary)]'
       }`}>
         {isBreak ? <FiCoffee size={14} /> : <FiClock size={14} />}
-        <span className="text-sm font-mono">
+        <span className="text-sm text-[var(--text-primary)] font-mono">
           {isBreak ? 'Break' : 'Focus'}
         </span>
       </div>

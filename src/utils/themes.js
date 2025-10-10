@@ -2,26 +2,29 @@
 //* Default theme ===============================================================================================
 
 export const defaultTheme = {
-  name: 'Dark',
-  colors: {
-    bg: {
-      primary: '#2c2e31',
-      secondary: '#252729',
-      tertiary: '#1f2123'
+  name: 'Glass',
+
+    colors: {
+      bg: {
+        primary: 'rgba(255, 255, 255, 0.15)',   // translucent base
+        secondary: 'rgba(255, 255, 255, 0.1)',  // slightly darker
+        tertiary: 'rgba(255, 255, 255, 0.05)'   // faint layer for cards/panels
+      },
+      text: {
+        primary: '#ffffff',        // bright text
+        secondary: '#d0d0d0',      // muted text
+        accent: '#00bcd4'          // cool glass-blue accent
+      },
+      button: {
+        primary: 'rgba(0, 188, 212, 0.9)',  // vibrant cyan glass
+        secondary: 'rgba(255, 255, 255, 0.2)', // subtle frosted
+        danger: 'rgba(234, 67, 53, 0.9)'       // red warning, slightly translucent
+      },
+      border: 'rgba(255, 255, 255, 0.2)',     // light border for contrast
+      overlay: 'rgba(0, 0, 0, 0.4)'           // darker overlay for dialogs
     },
-    text: {
-      primary: '#d1d0c5',
-      secondary: '#646669',
-      accent: '#e2b714'
-    },
-    button: {
-      primary: '#e2b714',
-      secondary: '#646669',
-      danger: '#ca4754'
-    },
-    border: '#646669',
-    overlay: 'rgba(0, 0, 0, 0.8)'
-  }
+    backgroundImage: 'url("/images/glass-bg.jpg")' // your glass texture / blur image
+
 };
 
 //*  ==============================================================================================================

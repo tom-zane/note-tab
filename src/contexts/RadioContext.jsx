@@ -1,238 +1,127 @@
-import { useState, useEffect, useRef, createContext, useContext } from "react";
-import PropTypes from "prop-types";
+import { createContext, useContext, useEffect, useState } from "react";
 
-import "tailwindcss/tailwind.css";
-
-// const YT_SCRIPT_SRC = "https://www.youtube.com/iframe_api";
-const YT_SCRIPT_SRC = "/radio.js";
-const FALLBACK_THUMB = "https://placehold.co/150x150";
-
-const defaultStations = [
-  { name: "Synthwave", genre: "lofi", url: "https://www.youtube.com/watch?v=4xDzrJKXOOY" },
-  { name: "Coffee", genre: "lofi", url: "https://www.youtube.com/watch?v=N_7cSl2oq3o" },
-  { name: "Jazz", genre: "lofi", url: "https://www.youtube.com/watch?v=HuFYqnbVbzY" },
-  { name: "Medivial", genre: "lofi", url: "https://www.youtube.com/watch?v=IxPANmjPaek" },
-  { name: "Halo", genre: "lofi", url: "https://www.youtube.com/watch?v=HuFYqnbVbzY" },
-  { name: "FlashFM", genre: "Pop", url: "https://www.youtube.com/watch?v=vqBbPH0aVXY" },
-];
-
-const RadioContext = createContext();
-
+const RadioContext = createContext(null);
 export const useRadio = () => useContext(RadioContext);
 
-const parseStation = (s) => {
-  const match = s.url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
-  const vid = match ? match[1] : "";
+/* ---------- helpers ---------- */
+
+/**
+ * song_name-genre.mp3
+ * → { name: "Song Name", genre: "genre" }
+ */
+function parseStationMeta(filename = "") {
+  const base = filename.replace(/\.mp3$/i, "");
+  const [rawName, rawGenre = "unknown"] = base.split("-");
+
   return {
-    ...s,
-    vid,
-    thumb: vid ? `https://img.youtube.com/vi/${vid}/hqdefault.jpg` : FALLBACK_THUMB,
+    name: rawName
+      .replace(/_/g, " ")
+      .toLowerCase()
+      .replace(/\b\w/g, c => c.toUpperCase()),
+    genre: rawGenre.toLowerCase(),
   };
-};
+}
+
+/* ---------- provider ---------- */
 
 export function RadioProvider({ children }) {
   const [stations, setStations] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(50);
-  const playerRef = useRef(null);
-  const ytPlayer = useRef(null);
+  const [playing, setPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.5);
 
-  // Parse station data
-  const parseStation = (s) => {
-    const match = s.url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
-    const vid = match ? match[1] : "";
-    return {
-      ...s,
-      vid,
-      thumb: vid ? `https://img.youtube.com/vi/${vid}/hqdefault.jpg` : FALLBACK_THUMB,
-    };
-  };
-  // get stations from localStorage
+  /* Fetch playlist once */
   useEffect(() => {
-    const loadStationsFromStorage = () => {
-      try {
-        const storedData = localStorage.getItem("radioStations");
-        const parsedStored = JSON.parse(storedData);
+    let cancelled = false;
 
-        if (Array.isArray(parsedStored) && parsedStored.length > 0) {
-          const parsed = parsedStored.map(parseStation);
-          setStations(parsed);
-        } else {
-          throw new Error("No valid stations in localStorage");
-        }
-      } catch (e) {
-        const parsedDefaults = defaultStations.map(parseStation);
-        setStations(parsedDefaults);
-        localStorage.setItem("radioStations", JSON.stringify(defaultStations));
-      }
+    fetch("https://music-server.aryanue195035ece.workers.dev/playlist")
+      .then(r => r.json())
+      .then(data => {
+        if (cancelled) return;
+
+        const parsed = data.tracks
+          .filter(t => t.size > 0 && t.name.toLowerCase().endsWith(".mp3"))
+          .map(t => {
+            const meta = parseStationMeta(t.name);
+
+            return {
+              id: t.name,      // stable key
+              url: t.url,
+              thumb: t.thumb,
+              name: meta.name,
+              genre: meta.genre,
+            };
+          });
+
+          console.log("[RADIO] fetched stations", parsed);
+        setStations(parsed);
+      })
+      .catch(err => {
+        console.error("[RADIO] playlist fetch failed", err);
+        setStations([]);
+      });
+
+    return () => {
+      cancelled = true;
     };
-
-    loadStationsFromStorage();
   }, []);
 
-  // Set stations in localStorage
-  // useEffect(() => {
-  //     console.log('Saving stations to localStorage:', stations.map(({ name, genre, url }) => ({ name, genre, url })));
-  //     localStorage.setItem('radioStations', JSON.stringify(stations.map(({ name, genre, url }) => ({ name, genre, url }))));
-  // }, [stations]);
-
-  //? Set up YouTube player ========================================================================
+  /* Keep index valid if station list changes */
   useEffect(() => {
-    if (!window.YT) {
-      const tag = document.createElement("script");
-      tag.src = YT_SCRIPT_SRC;
-      document.body.appendChild(tag);
-      window.onYouTubeIframeAPIReady = initPlayer;
-    } else {
-      initPlayer();
-    }
-  }, [stations]);
-
-  // Initialize YouTube player
-  function initPlayer() {
-    if (ytPlayer.current) return;
-    ytPlayer.current = new window.YT.Player(playerRef.current, {
-      height: 0,
-      width: 0,
-      playerVars: { autoplay: 0, controls: 0, rel: 0, modestbranding: 1, iv_load_policy: 3, disablekb: 1 },
-      events: {
-        onReady: () => ytPlayer.current.setVolume(volume),
-        onStateChange: (e) => {
-          if ([window.YT.PlayerState.ENDED, window.YT.PlayerState.UNPLAYABLE].includes(e.data)) {
-            nextStation();
-          }
-        },
-        onError: () => nextStation(),
-      },
-    });
-  }
-
-  // Set volume
-  useEffect(() => {
-    if (ytPlayer.current?.setVolume) {
-      ytPlayer.current.setVolume(volume);
-    }
-  }, [volume]);
-
-  useEffect(() => {
-    if (!window.YT) {
-      const tag = document.createElement("script");
-      tag.src = YT_SCRIPT_SRC;
-      document.body.appendChild(tag);
-      window.onYouTubeIframeAPIReady = initPlayer;
-    } else {
-      initPlayer();
-    }
-  }, [stations]);
-
-  function initPlayer() {
-    if (ytPlayer.current) return;
-    ytPlayer.current = new window.YT.Player(playerRef.current, {
-      height: 0,
-      width: 0,
-      playerVars: { autoplay: 0, controls: 0, rel: 0, modestbranding: 1, iv_load_policy: 3, disablekb: 1 },
-      events: {
-        onReady: () => ytPlayer.current.setVolume(volume),
-        onStateChange: (e) => {
-          if ([window.YT.PlayerState.ENDED, window.YT.PlayerState.UNPLAYABLE].includes(e.data)) {
-            nextStation();
-          }
-        },
-        onError: () => nextStation(),
-      },
-    });
-  }
-
-  useEffect(() => {
-    if (ytPlayer.current?.setVolume) {
-      ytPlayer.current.setVolume(volume);
-    }
-  }, [volume]);
-
-  const playStation = (i) => {
-    if (!stations[i] || !ytPlayer.current?.loadVideoById) return;
-    ytPlayer.current.loadVideoById({ videoId: stations[i].vid });
-    setCurrentIndex(i);
-    setIsPlaying(true);
-  };
-
-  const togglePlay = () => {
-    if (!ytPlayer.current) return;
-    if (isPlaying) {
-      ytPlayer.current.pauseVideo();
-      setIsPlaying(false);
-    } else {
-      playStation(currentIndex);
-    }
-  };
-
-  const nextStation = () => playStation((currentIndex + 1) % stations.length);
-  const prevStation = () => playStation((currentIndex - 1 + stations.length) % stations.length);
-  const shuffleStation = () => playStation(Math.floor(Math.random() * stations.length));
-
-  const saveStations = () => {
-    //   console.log("Saving stations to localStorage:", stations.map(({ name, genre, url }) => ({ name, genre, url })));
-    localStorage.setItem("radioStations", JSON.stringify(stations.map(({ name, genre, url }) => ({ name, genre, url }))));
-  };
-
-  const addStation = (name, genre, url) => {
-    console.log("addStation", name, genre, url);
-    if (name === "" || genre === "" || url === "") {
-      console.error("Missing fields");
-      return 0;
-    }
-    if (name.trim() === "" || genre.trim() === "" || url.trim() === "") {
-      console.error("Missing fields 3");
-      return 0;
-    }
-
-    setStations((prev) => [...prev, parseStation({ name, genre, url })]);
-    saveStations();
-  };
-
-  const deleteStation = (index) => {
-    console.log("deleteStation", index, currentIndex);
-    if (index === currentIndex) {
+    if (currentIndex >= stations.length) {
       setCurrentIndex(0);
+      setPlaying(false);
     }
-    setStations((prev) => {
-      const newStations = prev.filter((_, i) => i !== index);
-      console.log("deleteStation > prev", prev);
-      console.log("deleteStation > newStations", newStations);
-      //   hacky solution,fix it later
-      localStorage.setItem("radioStations", JSON.stringify(newStations));
-      return newStations;
-    });
-    console.log("Updated stations", stations);
+  }, [stations, currentIndex]);
+
+  /* ---------- controls ---------- */
+
+  const playIndex = (i) => {
+    if (!stations[i]) return;
+    setCurrentIndex(i);
+    setPlaying(true);
+  };
+
+  const nextStation = () => {
+    if (!stations.length) return;
+    playIndex((currentIndex + 1) % stations.length);
+  };
+
+  const prevStation = () => {
+    if (!stations.length) return;
+    playIndex((currentIndex - 1 + stations.length) % stations.length);
+  };
+
+  const shuffleStation = () => {
+    if (!stations.length) return;
+    playIndex(Math.floor(Math.random() * stations.length));
   };
 
   return (
     <RadioContext.Provider
       value={{
+        /* data */
         stations,
-        setStations,
         currentIndex,
-        setCurrentIndex,
-        isPlaying,
-        setIsPlaying,
-        playStation,
-        togglePlay,
+        current: stations[currentIndex] || null,
+
+        /* state */
+        playing,
+        volume,
+
+        /* setters */
+        setVolume,
+        setPlaying,
+
+        /* actions */
+        togglePlay: () => setPlaying(p => !p),
+        playIndex,
         nextStation,
         prevStation,
         shuffleStation,
-        volume,
-        setVolume,
-        saveStations,
-        addStation,
-        deleteStation,
-        playerRef,
-      }}>
+      }}
+    >
       {children}
     </RadioContext.Provider>
   );
 }
-
-RadioProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};

@@ -1,387 +1,411 @@
-//*  ============================================================================================================
+//* ============================================================================================================
 //* Default theme ===============================================================================================
 
 export const defaultTheme = {
-  name: 'Glass',
+  name: "Glass",
+  baseThemeType: "dark",
 
-    colors: {
-      bg: {
-        primary: 'rgba(255, 255, 255, 0.15)',   // translucent base
-        secondary: 'rgba(255, 255, 255, 0.1)',  // slightly darker
-        tertiary: 'rgba(255, 255, 255, 0.05)'   // faint layer for cards/panels
-      },
-      text: {
-        primary: '#ffffff',        // bright text
-        secondary: '#d0d0d0',      // muted text
-        accent: '#00bcd4'          // cool glass-blue accent
-      },
-      button: {
-        primary: 'rgba(0, 188, 212, 0.9)',  // vibrant cyan glass
-        secondary: 'rgba(255, 255, 255, 0.2)', // subtle frosted
-        danger: 'rgba(234, 67, 53, 0.9)'       // red warning, slightly translucent
-      },
-      border: 'rgba(255, 255, 255, 0.2)',     // light border for contrast
-      overlay: 'rgba(0, 0, 0, 0.4)'           // darker overlay for dialogs
+  colors: {
+    bg: {
+      primary: "rgba(255, 255, 255, 0.15)",
+      secondary: "rgba(255, 255, 255, 0.1)",
+      tertiary: "rgba(255, 255, 255, 0.05)",
     },
-    backgroundImage: 'url("/images/glass-bg.jpg")' // your glass texture / blur image
-
+    text: {
+      primary: "#ffffff",
+      secondary: "#d0d0d0",
+      accent: "#00bcd4",
+    },
+    button: {
+      primary: "rgba(0, 188, 212, 0.9)",
+      secondary: "rgba(255, 255, 255, 0.2)",
+      danger: "rgba(234, 67, 53, 0.9)",
+    },
+    border: "rgba(255, 255, 255, 0.2)",
+    overlay: "rgba(0, 0, 0, 0.4)",
+  },
+  backgroundImage: 'url("/images/glass-bg.jpg")',
 };
 
-//*  ==============================================================================================================
-//*  Themes =======================================================================================================
+//* ============================================================================================================
+//* Themes ======================================================================================================
+
 export const themes = {
   glass: {
-    name: 'Glass',
+    name: "Glass",
+    baseThemeType: "dark",
     colors: {
       bg: {
-        primary: 'rgba(255, 255, 255, 0.15)',   // translucent base
-        secondary: 'rgba(255, 255, 255, 0.1)',  // slightly darker
-        tertiary: 'rgba(255, 255, 255, 0.05)'   // faint layer for cards/panels
+        primary: "rgba(255, 255, 255, 0.18)",
+        secondary: "rgba(255, 255, 255, 0.12)",
+        tertiary: "rgba(255, 255, 255, 0.08)",
       },
       text: {
-        primary: '#ffffff',        // bright text
-        secondary: '#d0d0d0',      // muted text
-        accent: '#00bcd4'          // cool glass-blue accent
+        primary: "#ffffff",
+        secondary: "rgba(255, 255, 255, 0.75)",
+        accent: "#4dd0e1",
       },
       button: {
-        primary: 'rgba(0, 188, 212, 0.9)',  // vibrant cyan glass
-        secondary: 'rgba(255, 255, 255, 0.2)', // subtle frosted
-        danger: 'rgba(234, 67, 53, 0.9)'       // red warning, slightly translucent
+        primary: "rgba(77, 208, 225, 0.95)",
+        secondary: "rgba(255, 255, 255, 0.25)",
+        danger: "rgba(244, 67, 54, 0.9)",
       },
-      border: 'rgba(255, 255, 255, 0.2)',     // light border for contrast
-      overlay: 'rgba(0, 0, 0, 0.4)'           // darker overlay for dialogs
+      border: "rgba(255, 255, 255, 0.28)",
+      overlay: "rgba(0, 0, 0, 0.5)",
     },
-    backgroundImage: 'url("/images/glass-bg.jpg")' // your glass texture / blur image
-  }
-  ,
+    backgroundImage: 'url("/images/glass-bg.jpg")',
+  },
+
   light: {
-    name: 'Light',
+    name: "Light",
+    baseThemeType: "light",
     colors: {
       bg: {
-        primary: '#ffffff',
-        secondary: '#f5f5f5',
-        tertiary: '#ebebeb'
+        primary: "#ffffff",
+        secondary: "#f5f5f5",
+        tertiary: "#ebebeb",
       },
       text: {
-        primary: '#2c2e31',
-        secondary: '#646669',
-        accent: '#e2b714'
+        primary: "#2c2e31",
+        secondary: "#646669",
+        accent: "#e2b714",
       },
       button: {
-        primary: '#e2b714',
-        secondary: '#646669',
-        danger: '#ca4754'
+        primary: "#e2b714",
+        secondary: "#646669",
+        danger: "#ca4754",
       },
-      border: '#646669',
-      overlay: 'rgba(0, 0, 0, 0.1)'
-    }
+      border: "#646669",
+      overlay: "rgba(0, 0, 0, 0.1)",
+    },
   },
-  dark: defaultTheme,
+
+
   monokai: {
-    name: 'Monokai',
+    name: "Monokai",
+    baseThemeType: "dark",
     colors: {
       bg: {
-        primary: '#272822',
-        secondary: '#22231e',
-        tertiary: '#1d1e19'
+        primary: "#272822",
+        secondary: "#22231e",
+        tertiary: "#1d1e19",
       },
       text: {
-        primary: '#f8f8f2',
-        secondary: '#75715e',
-        accent: '#e6db74'
+        primary: "#f8f8f2",
+        secondary: "#75715e",
+        accent: "#e6db74",
       },
       button: {
-        primary: '#e6db74',
-        secondary: '#75715e',
-        danger: '#f92672'
+        primary: "#e6db74",
+        secondary: "#75715e",
+        danger: "#f92672",
       },
-      border: '#75715e',
-      overlay: 'rgba(0, 0, 0, 0.5)'
-    }
+      border: "#75715e",
+      overlay: "rgba(0, 0, 0, 0.5)",
+    },
   },
+
   nord: {
-    name: 'Nord',
+    name: "Abyss",
+    baseThemeType: "dark",
     colors: {
       bg: {
-        primary: '#2e3440',
-        secondary: '#292e39',
-        tertiary: '#242933'
+        primary: "#2e3440",
+        secondary: "#292e39",
+        tertiary: "#242933",
       },
       text: {
-        primary: '#d8dee9',
-        secondary: '#4c566a',
-        accent: '#88c0d0'
+        primary: "#d8dee9",
+        secondary: "#4c566a",
+        accent: "#88c0d0",
       },
       button: {
-        primary: '#88c0d0',
-        secondary: '#4c566a',
-        danger: '#bf616a'
+        primary: "#88c0d0",
+        secondary: "#4c566a",
+        danger: "#bf616a",
       },
-      border: '#4c566a',
-      overlay: 'rgba(0, 0, 0, 0.5)'
-    }
+      border: "#4c566a",
+      overlay: "rgba(0, 0, 0, 0.5)",
+    },
   },
+
   dracula: {
-    name: 'Dracula',
+    name: "Dracula",
+    baseThemeType: "dark",
     colors: {
       bg: {
-        primary: '#282a36',
-        secondary: '#242631',
-        tertiary: '#1f212c'
+        primary: "#282a36",
+        secondary: "#242631",
+        tertiary: "#1f212c",
       },
       text: {
-        primary: '#f8f8f2',
-        secondary: '#6272a4',
-        accent: '#ff79c6'
+        primary: "#f8f8f2",
+        secondary: "#6272a4",
+        accent: "#ff79c6",
       },
       button: {
-        primary: '#ff79c6',
-        secondary: '#6272a4',
-        danger: '#ff5555'
+        primary: "#ff79c6",
+        secondary: "#6272a4",
+        danger: "#ff5555",
       },
-      border: '#6272a4',
-      overlay: 'rgba(0, 0, 0, 0.5)'
-    }
+      border: "#6272a4",
+      overlay: "rgba(0, 0, 0, 0.5)",
+    },
   },
+
   github: {
-    name: 'GitHub',
+    name: "GitHub",
+    baseThemeType: "dark",
     colors: {
       bg: {
-        primary: '#0d1117',
-        secondary: '#0a0c10',
-        tertiary: '#06070a'
+        primary: "#0d1117",
+        secondary: "#0a0c10",
+        tertiary: "#06070a",
       },
       text: {
-        primary: '#c9d1d9',
-        secondary: '#8b949e',
-        accent: '#58a6ff'
+        primary: "#c9d1d9",
+        secondary: "#8b949e",
+        accent: "#58a6ff",
       },
       button: {
-        primary: '#58a6ff',
-        secondary: '#30363d',
-        danger: '#f85149'
+        primary: "#58a6ff",
+        secondary: "#30363d",
+        danger: "#f85149",
       },
-      border: '#30363d',
-      overlay: 'rgba(0, 0, 0, 0.5)'
-    }
+      border: "#30363d",
+      overlay: "rgba(0, 0, 0, 0.5)",
+    },
   },
+
   solarizedLight: {
-    name: 'Solarized Light',
+    name: "Solarized",
+    baseThemeType: "light",
     colors: {
       bg: {
-        primary: '#fdf6e3',
-        secondary: '#eee8d5',
-        tertiary: '#e1dbcd'
+        primary: "#fdf6e3",
+        secondary: "#eee8d5",
+        tertiary: "#e1dbcd",
       },
       text: {
-        primary: '#586e75',
-        secondary: '#657b83',
-        accent: '#268bd2'
+        primary: "#586e75",
+        secondary: "#657b83",
+        accent: "#268bd2",
       },
       button: {
-        primary: '#268bd2',
-        secondary: '#d3cfc4',
-        danger: '#dc322f'
+        primary: "#268bd2",
+        secondary: "#d3cfc4",
+        danger: "#dc322f",
       },
-      border: '#ccc6b6',
-      overlay: 'rgba(0, 0, 0, 0.05)'
-    }
+      border: "#ccc6b6",
+      overlay: "rgba(0, 0, 0, 0.05)",
+    },
   },
+
   nordLight: {
-    name: 'Nord Light',
+    name: "Nord",
+    baseThemeType: "light",
     colors: {
       bg: {
-        primary: '#eceff4',
-        secondary: '#e5e9f0',
-        tertiary: '#d8dee9'
+        primary: "#eceff4",
+        secondary: "#e5e9f0",
+        tertiary: "#d8dee9",
       },
       text: {
-        primary: '#2e3440',
-        secondary: '#4c566a',
-        accent: '#5e81ac'
+        primary: "#2e3440",
+        secondary: "#4c566a",
+        accent: "#5e81ac",
       },
       button: {
-        primary: '#5e81ac',
-        secondary: '#d8dee9',
-        danger: '#bf616a'
+        primary: "#5e81ac",
+        secondary: "#d8dee9",
+        danger: "#bf616a",
       },
-      border: '#d1d5db',
-      overlay: 'rgba(0, 0, 0, 0.05)'
-    }
+      border: "#d1d5db",
+      overlay: "rgba(0, 0, 0, 0.05)",
+    },
   },
+
   midnightNeon: {
-    name: 'Midnight Neon',
+    name: "Neon",
+    baseThemeType: "dark",
     colors: {
       bg: {
-        primary: '#0b0f1a',
-        secondary: '#131a26',
-        tertiary: '#1a2332',
-        quaternary: '#202c3a'
+        primary: "#0b0f1a",
+        secondary: "#131a26",
+        tertiary: "#1a2332",
+        quaternary: "#202c3a",
       },
       text: {
-        primary: '#f1f5f9',
-        secondary: '#94a3b8',
-        accent: '#00ffff',
-        subtle: '#38bdf8'
+        primary: "#f1f5f9",
+        secondary: "#94a3b8",
+        accent: "#00ffff",
+        subtle: "#38bdf8",
       },
       button: {
-        primary: '#00ffff',
-        secondary: '#1e293b',
-        danger: '#f43f5e',
-        success: '#34d399'
+        primary: "#00ffff",
+        secondary: "#1e293b",
+        danger: "#f43f5e",
+        success: "#34d399",
       },
-      border: '#334155',
-      overlay: 'rgba(0, 255, 255, 0.1)'
-    }
-  }
-  ,
-  blushLight: {
-    name: 'Blush Light',
-    colors: {
-      bg: {
-        primary: '#fffafa',
-        secondary: '#fef2f2',
-        tertiary: '#fce7f3',
-        quaternary: '#f3e8ff'
-      },
-      text: {
-        primary: '#4b5563',
-        secondary: '#6b7280',
-        accent: '#ec4899',
-        subtle: '#d946ef'
-      },
-      button: {
-        primary: '#ec4899',
-        secondary: '#f9a8d4',
-        danger: '#ef4444',
-        success: '#10b981'
-      },
-      border: '#e5e7eb',
-      overlay: 'rgba(0, 0, 0, 0.03)'
-    }
-  }
-  ,
-  frostbyte: {
-    name: 'Frostbyte',
-    colors: {
-      bg: {
-        primary: '#f8fafc',
-        secondary: '#e2e8f0',
-        tertiary: '#cbd5e1',
-        quaternary: '#94a3b8'
-      },
-      text: {
-        primary: '#1e293b',
-        secondary: '#334155',
-        accent: '#0ea5e9',
-        subtle: '#0284c7'
-      },
-      button: {
-        primary: '#0ea5e9',
-        secondary: '#cbd5e1',
-        danger: '#ef4444',
-        success: '#22c55e'
-      },
-      border: '#cbd5e1',
-      overlay: 'rgba(0, 0, 0, 0.05)'
-    }
-  }
-  ,
-  abyss: {
-    name: 'Abyss',
-    colors: {
-      bg: {
-        primary: '#0c0a09',
-        secondary: '#1f1e1d',
-        tertiary: '#2a2a2a',
-        quaternary: '#373737'
-      },
-      text: {
-        primary: '#f4f4f5',
-        secondary: '#a1a1aa',
-        accent: '#38bdf8',
-        subtle: '#0ea5e9'
-      },
-      button: {
-        primary: '#38bdf8',
-        secondary: '#3f3f46',
-        danger: '#f87171',
-        success: '#4ade80'
-      },
-      border: '#52525b',
-      overlay: 'rgba(255, 255, 255, 0.05)'
-    }
-  }
-  ,
-  solarized: {
-    name: 'Solarized',
-    colors: {
-      bg: {
-        primary: '#002b36',
-        secondary: '#001f27',
-        tertiary: '#00171c'
-      },
-      text: {
-        primary: '#839496',
-        secondary: '#586e75',
-        accent: '#b58900'
-      },
-      button: {
-        primary: '#b58900',
-        secondary: '#586e75',
-        danger: '#dc322f'
-      },
-      border: '#586e75',
-      overlay: 'rgba(0, 0, 0, 0.5)'
-    }
+      border: "#334155",
+      overlay: "rgba(0, 255, 255, 0.1)",
+    },
   },
-  gruvbox: {
-    name: 'Gruvbox',
+
+  blushLight: {
+    name: "Blush",
+    baseThemeType: "light",
     colors: {
       bg: {
-        primary: '#282828',
-        secondary: '#1d2021',
-        tertiary: '#141617'
+        primary: "#fffafa",
+        secondary: "#fef2f2",
+        tertiary: "#fce7f3",
+        quaternary: "#f3e8ff",
       },
       text: {
-        primary: '#ebdbb2',
-        secondary: '#928374',
-        accent: '#fe8019'
+        primary: "#4b5563",
+        secondary: "#6b7280",
+        accent: "#ec4899",
+        subtle: "#d946ef",
       },
       button: {
-        primary: '#fe8019',
-        secondary: '#504945',
-        danger: '#fb4934'
+        primary: "#ec4899",
+        secondary: "#f9a8d4",
+        danger: "#ef4444",
+        success: "#10b981",
       },
-      border: '#504945',
-      overlay: 'rgba(0, 0, 0, 0.5)'
-    }
-  }
+      border: "#e5e7eb",
+      overlay: "rgba(0, 0, 0, 0.03)",
+    },
+  },
+
+  frostbyte: {
+    name: "Frostbyte",
+    baseThemeType: "light",
+    colors: {
+      bg: {
+        primary: "#f8fafc",
+        secondary: "#e2e8f0",
+        tertiary: "#cbd5e1",
+        quaternary: "#94a3b8",
+      },
+      text: {
+        primary: "#1e293b",
+        secondary: "#334155",
+        accent: "#0ea5e9",
+        subtle: "#0284c7",
+      },
+      button: {
+        primary: "#0ea5e9",
+        secondary: "#cbd5e1",
+        danger: "#ef4444",
+        success: "#22c55e",
+      },
+      border: "#cbd5e1",
+      overlay: "rgba(0, 0, 0, 0.05)",
+    },
+  },
+
+  abyss: {
+    name: "Abyss",
+    baseThemeType: "dark",
+    colors: {
+      bg: {
+        primary: "#0c0a09",
+        secondary: "#1f1e1d",
+        tertiary: "#2a2a2a",
+        quaternary: "#373737",
+      },
+      text: {
+        primary: "#f4f4f5",
+        secondary: "#a1a1aa",
+        accent: "#38bdf8",
+        subtle: "#0ea5e9",
+      },
+      button: {
+        primary: "#38bdf8",
+        secondary: "#3f3f46",
+        danger: "#f87171",
+        success: "#4ade80",
+      },
+      border: "#52525b",
+      overlay: "rgba(255, 255, 255, 0.05)",
+    },
+  },
+
+  solarized: {
+    name: "Solarized",
+    baseThemeType: "dark",
+    colors: {
+      bg: {
+        primary: "#002b36",
+        secondary: "#001f27",
+        tertiary: "#00171c",
+      },
+      text: {
+        primary: "#839496",
+        secondary: "#586e75",
+        accent: "#b58900",
+      },
+      button: {
+        primary: "#b58900",
+        secondary: "#586e75",
+        danger: "#dc322f",
+      },
+      border: "#586e75",
+      overlay: "rgba(0, 0, 0, 0.5)",
+    },
+  },
+
+  gruvbox: {
+    name: "Gruvbox",
+    baseThemeType: "dark",
+    colors: {
+      bg: {
+        primary: "#282828",
+        secondary: "#1d2021",
+        tertiary: "#141617",
+      },
+      text: {
+        primary: "#ebdbb2",
+        secondary: "#928374",
+        accent: "#fe8019",
+      },
+      button: {
+        primary: "#fe8019",
+        secondary: "#504945",
+        danger: "#fb4934",
+      },
+      border: "#504945",
+      overlay: "rgba(0, 0, 0, 0.5)",
+    },
+  },
 };
 
-//*  ==============================================================================================================
-//*  Clock Themes =================================================================================================
+//* ============================================================================================================
+//* Clock Themes =================================================================================================
+
 export const clockThemes = {
-  minimal: 'Minimal',
-  digital: 'Digital',
-  analog: 'Analog',
-  modern: 'Modern',
-  retro: 'Retro'
+  minimal: "Minimal",
+  digital: "Digital",
+  analog: "Analog",
+  modern: "Modern",
+  retro: "Retro",
 };
 
-//*  ==============================================================================================================
-//*  Fonts ========================================================================================================
+//* ============================================================================================================
+//* Fonts ========================================================================================================
 
 export const fonts = {
-  'JetBrains Mono': "'JetBrains Mono', monospace",
-  'Fira Code': "'Fira Code', monospace",
-  'Source Code Pro': "'Source Code Pro', monospace",
-  'IBM Plex Mono': "'IBM Plex Mono', monospace",
-  'Space Mono': "'Space Mono', monospace"
+  "JetBrains Mono": "'JetBrains Mono', monospace",
+  "Fira Code": "'Fira Code', monospace",
+  "Source Code Pro": "'Source Code Pro', monospace",
+  "IBM Plex Mono": "'IBM Plex Mono', monospace",
+  "Space Mono": "'Space Mono', monospace",
 };
 
-//*  ==============================================================================================================
-//*  Default Settings =============================================================================================
+//* ============================================================================================================
+//* Default Settings =============================================================================================
 
 export const defaultSettings = {
   syncEnabled: false,
@@ -391,14 +415,13 @@ export const defaultSettings = {
   clockSize: 24,
   sidebarSize: 13,
   linkSize: 13,
-  theme: 'dark',
-  font: 'JetBrains Mono',
+  theme: "glass",
+  font: "JetBrains Mono",
   showSeconds: false,
   showLinks: false,
   showClock: true,
   showRadio: true,
-  clockTheme: 'minimal',
+  clockTheme: "minimal",
   focusTime: 25,
-  breakTime: 5
-
+  breakTime: 5,
 };
